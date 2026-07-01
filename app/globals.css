@@ -1,15 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #b7c1ba;
+  --foreground: #102a25;
+  --evergreen-velvet: #1e5b4c;
+  --slate-sage: #8aa39b;
+  --pewter-mist: #b7c1ba;
+  --copper-ember: #c8603a;
+  --port-wine: #5e1f2a;
+  --deep-velvet: #071914;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif;
+  --font-mono: "SF Mono", "SFMono-Regular", ui-monospace, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +28,2487 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    sans-serif;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: default;
+}
+
+.mac-screen {
+  background: var(--evergreen-velvet);
+}
+
+.mac-menu-bar {
+  background: rgb(183 193 186 / 62%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 24%) inset;
+  backdrop-filter: blur(20px) saturate(1.35);
+}
+
+.mac-label {
+  color: white;
+  text-shadow:
+    0 1px 1px rgb(0 0 0 / 75%),
+    0 0 5px rgb(0 0 0 / 38%);
+}
+
+.mac-folder-icon {
+  width: 78px;
+  height: 78px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 14px rgb(30 91 76 / 28%));
+  transform: scale(1.12);
+  transition:
+    filter 180ms ease,
+    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mac-desktop-icon {
+  --pop-delay: 0ms;
+  opacity: 0;
+  animation: page-pop-in 700ms cubic-bezier(0.2, 1.15, 0.32, 1) var(--pop-delay) both;
+  transition:
+    filter 180ms ease,
+    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: center top;
+}
+
+.mac-desktop-icon:hover {
+  transform: translateY(-8px) scale(1.34);
+}
+
+.mac-desktop-icon:hover .mac-folder-icon {
+  filter: drop-shadow(0 20px 24px rgb(7 25 20 / 36%));
+  transform: scale(1.2);
+}
+
+.desktop-stage {
+  min-height: calc(100vh - 1.5rem);
+}
+
+.folder-column {
+  align-content: center;
+}
+
+.folder-cluster,
+.folder-cluster-item {
+  display: contents;
+}
+
+.avatar-panel {
+  min-width: 0;
+  width: 100%;
+}
+
+.avatar-bouncer {
+  animation: avatar-side-arc 1440ms cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  transform-origin: center;
+}
+
+.avatar-frame {
+  --pupil-x: 0px;
+  --pupil-y: 0px;
+  position: relative;
+  width: 350px;
+  height: 350px;
+  opacity: 0;
+  filter: drop-shadow(0 14px 24px rgb(0 0 0 / 24%));
+  transform-origin: center;
+  animation: avatar-frame-pop 840ms cubic-bezier(0.2, 1.15, 0.32, 1) 540ms both;
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
+}
+
+.avatar-frame:hover {
+  filter: drop-shadow(0 18px 30px rgb(0 0 0 / 30%));
+  transform: scale(1.12);
+}
+
+.avatar-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1;
+  transition:
+    opacity 120ms ease,
+    transform 90ms linear;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.avatar-base-layer {
+  z-index: 1;
+  transform: scale(1.08);
+}
+
+.avatar-pupils-layer {
+  z-index: 2;
+  transform: translate3d(var(--pupil-x), var(--pupil-y), 0) scale(1.08);
+  will-change: transform;
+}
+
+.avatar-layer-hidden {
+  opacity: 0;
+}
+
+.avatar-emotion-layer {
+  z-index: 3;
+  opacity: 1;
+}
+
+.avatar-emotion-mail {
+  transform: scale(1.02);
+}
+
+.avatar-emotion-safari,
+.avatar-emotion-notes {
+  transform: scale(0.95);
+}
+
+.avatar-emotion-claude {
+  transform: scale(0.99);
+}
+
+.avatar-emotion-photos {
+  transform: scale(1.02);
+}
+
+.comic-profile {
+  --comic-avatar-left: 45%;
+  --comic-avatar-top: 38%;
+  --comic-avatar-size: 310px;
+  --comic-caption-gap: 1.15rem;
+  position: relative;
+  width: min(100%, 720px);
+  height: clamp(560px, 70vh, 650px);
+  min-height: 560px;
+  margin-top: -4.25rem;
+  isolation: isolate;
+}
+
+.comic-profile .avatar-frame {
+  width: var(--comic-avatar-size);
+  height: var(--comic-avatar-size);
+}
+
+.comic-avatar {
+  position: absolute;
+  left: var(--comic-avatar-left);
+  top: var(--comic-avatar-top);
+  z-index: 1;
+  transform: translate(-50%, -50%);
+}
+
+.comic-caption {
+  position: absolute;
+  left: var(--comic-avatar-left);
+  top: calc(var(--comic-avatar-top) + (var(--comic-avatar-size) / 2) + var(--comic-caption-gap));
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  width: min(90%, 520px);
+  opacity: 0;
+  transform: translateX(-50%);
+  animation: caption-pop-in 760ms cubic-bezier(0.2, 1.15, 0.32, 1) 820ms both;
+  pointer-events: none;
+}
+
+.comic-caption-arrow-wrap {
+  display: flex;
+  justify-content: center;
+  width: clamp(35px, 4vw, 46px);
+  animation: arrow-idle-bounce 1780ms cubic-bezier(0.34, 0.08, 0.3, 1) 1.1s infinite;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.comic-caption-arrow {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter:
+    drop-shadow(0 2px 0 rgb(7 25 20 / 24%))
+    drop-shadow(0 10px 18px rgb(7 25 20 / 16%));
+}
+
+.comic-caption-text {
+  width: min(100%, 34rem);
+  min-height: 6.6rem;
+  margin: 0;
+  color: #f5f3ee;
+  font-size: clamp(1.32rem, 1.15rem + 0.95vw, 2rem);
+  line-height: 1.28;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  text-shadow:
+    0 2px 0 rgb(7 25 20 / 28%),
+    0 8px 18px rgb(7 25 20 / 18%);
+  animation: comic-pop-line 740ms cubic-bezier(0.2, 1.18, 0.32, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes comic-pop-line {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scaleY(1.28) scaleX(0.88) rotate(-3deg);
+  }
+
+  42% {
+    opacity: 1;
+    transform: translateY(-10px) scaleY(0.9) scaleX(1.04) rotate(2deg);
+  }
+
+  68% {
+    opacity: 1;
+    transform: translateY(2px) scaleY(1.03) scaleX(0.99) rotate(-1deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes arrow-idle-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-10px) scale(1.06) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(2px) scale(0.97) rotate(1deg);
+  }
+
+  72% {
+    transform: translateY(-5px) scale(1.02) rotate(-1deg);
+  }
+}
+
+@keyframes page-pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.72);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.08);
+  }
+
+  78% {
+    opacity: 1;
+    transform: translateY(1px) scale(0.98);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes avatar-frame-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  58% {
+    opacity: 1;
+    transform: scale(1.09);
+  }
+
+  78% {
+    opacity: 1;
+    transform: scale(0.98);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes caption-pop-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(18px) scale(0.76);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-6px) scale(1.06);
+  }
+
+  78% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(1px) scale(0.985);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.mac-window-layer {
+  padding: 4.25rem 1rem 8.75rem;
+}
+
+.mac-app-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: min(884px, calc(100vw - 2rem));
+  height: min(559px, calc(100vh - 9rem));
+  min-height: 312px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgb(247 248 246 / 92%), rgb(222 228 224 / 88%)),
+    var(--pewter-mist);
+  box-shadow:
+    0 34px 80px rgb(7 25 20 / 36%),
+    0 1px 0 rgb(255 255 255 / 62%) inset,
+    0 -1px 0 rgb(7 25 20 / 10%) inset;
+  color: rgb(16 42 37 / 82%);
+  backdrop-filter: blur(24px) saturate(1.1);
+}
+
+.mac-app-window-contact {
+  left: 13vw;
+  top: 15vh;
+}
+
+.mac-app-window-education {
+  left: 18vw;
+  top: 12vh;
+}
+
+.mac-app-window-assistant {
+  left: 24vw;
+  top: 18vh;
+}
+
+.mac-app-window-resume {
+  left: 29vw;
+  top: 14vh;
+}
+
+.mac-app-window-vibes {
+  left: 20vw;
+  top: 21vh;
+}
+
+.mac-app-window-skills {
+  left: 26vw;
+  top: 16vh;
+}
+
+.mac-app-window-killed {
+  left: 31vw;
+  top: 20vh;
+}
+
+.mac-folder-window {
+  left: 17vw;
+  top: 8vh;
+  width: min(742px, calc(100vw - 2rem));
+  height: min(620px, calc(100vh - 8rem));
+  border: 1px solid rgb(57 50 47 / 22%);
+  border-radius: 10px;
+  background: #ece8e6;
+  color: #1c1c1e;
+  box-shadow:
+    0 30px 70px rgb(17 16 15 / 34%),
+    0 1px 0 rgb(255 255 255 / 82%) inset;
+}
+
+.mac-window-toolbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  border-bottom: 1px solid rgb(16 42 37 / 13%);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 76%), rgb(183 193 186 / 55%)),
+    var(--pewter-mist);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 72%) inset;
+}
+
+.mac-window-controls {
+  display: flex;
+  gap: 8px;
+  padding-left: 13px;
+}
+
+.mac-window-control {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 0.5px rgb(7 25 20 / 22%) inset,
+    0 1px 0 rgb(255 255 255 / 45%) inset;
+}
+
+.mac-window-close {
+  position: relative;
+  background: #ff5f57;
+}
+
+.mac-window-close:hover {
+  filter: brightness(0.94);
+}
+
+.mac-window-close::before,
+.mac-window-close::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 1.25px;
+  border-radius: 999px;
+  background: rgb(99 23 21 / 76%);
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.mac-window-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.mac-window-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.mac-window-close:hover::before,
+.mac-window-close:hover::after {
+  opacity: 1;
+}
+
+.mac-window-minimize {
+  background: #febc2e;
+}
+
+.mac-window-expand {
+  background: #28c840;
+}
+
+.mac-window-control:disabled {
+  opacity: 1;
+}
+
+.mac-window-title {
+  position: absolute;
+  left: 50%;
+  max-width: calc(100% - 150px);
+  transform: translateX(-50%);
+  overflow: hidden;
+  color: rgb(16 42 37 / 72%);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mac-window-content {
+  flex: 1;
+  background:
+    radial-gradient(circle at 20% 18%, rgb(255 255 255 / 42%), transparent 28%),
+    rgb(247 248 246 / 76%);
+}
+
+.folder-info-toolbar {
+  position: relative;
+  display: flex;
+  min-height: 31px;
+  align-items: center;
+  flex: 0 0 31px;
+  border-bottom: 1px solid rgb(77 69 65 / 26%);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 86%), rgb(217 212 209 / 96%)),
+    #e4dfdc;
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 74%) inset,
+    0 -1px 0 rgb(255 255 255 / 25%) inset;
+}
+
+.folder-info-toolbar .mac-window-controls {
+  gap: 7px;
+  padding-left: 9px;
+}
+
+.folder-info-toolbar .mac-window-control {
+  width: 10px;
+  height: 10px;
+}
+
+.folder-info-title {
+  position: absolute;
+  left: 60px;
+  right: 14px;
+  overflow: hidden;
+  margin: 0;
+  color: rgb(28 28 30 / 92%);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folder-info-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 9px 8px 18px;
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 22%), transparent 24%),
+    #ece8e6;
+  scrollbar-color: rgb(92 85 81 / 48%) transparent;
+  scrollbar-width: thin;
+}
+
+.folder-info-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.folder-info-content::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgb(92 85 81 / 48%);
+  background-clip: padding-box;
+}
+
+.folder-info-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 55px;
+  margin-bottom: 8px;
+  padding: 0 2px;
+}
+
+.folder-info-thumbnail {
+  position: relative;
+  flex: 0 0 auto;
+  width: 54px;
+  height: 44px;
+  margin-top: 4px;
+  border-radius: 5px 6px 7px 7px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 20%), transparent 38%),
+    linear-gradient(180deg, #20bcff, #078eea);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 50%) inset,
+    0 1px 0 #007ad0,
+    0 3px 7px rgb(0 0 0 / 20%);
+}
+
+.folder-info-thumbnail::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: -6px;
+  width: 25px;
+  height: 11px;
+  border-radius: 5px 5px 1px 1px;
+  background: linear-gradient(180deg, #2f79ff, #1264d8);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 30%) inset;
+}
+
+.folder-info-summary h2,
+.folder-info-summary p {
+  margin: 0;
+}
+
+.folder-info-summary h2 {
+  color: #111;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.folder-info-summary p {
+  margin-top: 1px;
+  color: rgb(28 28 30 / 86%);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.folder-info-description {
+  margin-bottom: 8px;
+  padding: 7px 8px;
+  border: 1px solid rgb(62 57 54 / 10%);
+  background: rgb(255 255 255 / 88%);
+  color: rgb(75 72 70 / 88%);
+  font-size: 12px;
+  line-height: 1.28;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 70%) inset;
+}
+
+.folder-info-section-list {
+  display: grid;
+  gap: 0;
+}
+
+.folder-info-section {
+  padding-top: 2px;
+}
+
+.folder-info-section h3 {
+  position: relative;
+  display: flex;
+  min-height: 24px;
+  align-items: center;
+  margin: 0;
+  padding-left: 15px;
+  border-top: 1px solid rgb(83 76 72 / 18%);
+  color: rgb(25 24 23 / 94%);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.folder-info-section h3::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  transform: rotate(45deg);
+  border-bottom: 1px solid rgb(28 28 30 / 56%);
+  border-right: 1px solid rgb(28 28 30 / 56%);
+}
+
+.folder-info-empty {
+  min-height: 72px;
+  margin: 0 1px 5px;
+  padding: 8px;
+  border: 1px solid rgb(62 57 54 / 9%);
+  background: rgb(255 255 255 / 88%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 72%) inset;
+}
+
+.folder-info-empty p {
+  max-width: 62ch;
+  margin: 0;
+  color: rgb(86 81 78 / 76%);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.folder-info-type {
+  margin: 0 0 6px;
+  padding: 2px 10px 5px 21px;
+  color: rgb(28 28 30 / 90%);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.folder-info-preview {
+  position: relative;
+  min-height: 330px;
+  margin: 3px 14px 4px;
+  overflow: hidden;
+  border: 1px solid rgb(61 54 50 / 14%);
+  border-radius: 11px;
+  background:
+    radial-gradient(circle at 72% 34%, rgb(255 255 255 / 22%) 0 7%, transparent 8%),
+    radial-gradient(circle at 36% 42%, var(--copper-ember) 0 13%, transparent 14%),
+    linear-gradient(145deg, var(--evergreen-velvet), #103b32 52%, var(--port-wine));
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 26%) inset,
+    0 8px 22px rgb(42 31 27 / 16%);
+}
+
+.folder-info-preview::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 152px;
+  height: 116px;
+  transform: translate(-50%, -45%);
+  border-radius: 13px 16px 17px 17px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 20%), transparent 42%),
+    linear-gradient(180deg, #24c2ff, #078ce8);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 45%) inset,
+    0 16px 34px rgb(4 25 31 / 28%);
+}
+
+.folder-info-preview::after {
+  content: "Project preview";
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 78px);
+  transform: translateX(-50%);
+  color: rgb(255 255 255 / 76%);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 35%);
+  white-space: nowrap;
+}
+
+.mac-app-window-education {
+  border-color: rgb(255 255 255 / 10%);
+  background: #1f2227;
+  color: rgb(244 246 248 / 88%);
+}
+
+.mac-app-window-education .mac-window-content {
+  background: #202329;
+}
+
+.safari-window-toolbar {
+  display: grid;
+  grid-template-columns: auto 64px 34px 34px minmax(190px, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 10px;
+  border-bottom: 1px solid rgb(255 255 255 / 7%);
+  background:
+    linear-gradient(180deg, rgb(47 50 57 / 98%), rgb(35 38 44 / 98%)),
+    #25282e;
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 -1px 0 rgb(0 0 0 / 45%) inset;
+}
+
+.safari-window-toolbar .mac-window-controls {
+  padding-left: 0;
+}
+
+.safari-toolbar-button {
+  position: relative;
+  display: grid;
+  width: 34px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 11px;
+  background: rgb(255 255 255 / 5%);
+  color: rgb(245 247 250 / 78%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 9%) inset,
+    0 1px 1px rgb(0 0 0 / 20%);
+}
+
+.safari-toolbar-button:disabled {
+  opacity: 0.42;
+}
+
+.safari-sidebar-button {
+  width: 58px;
+}
+
+.safari-sidebar-button span {
+  position: relative;
+  width: 18px;
+  height: 14px;
+  border: 1.5px solid currentcolor;
+  border-radius: 2px;
+}
+
+.safari-sidebar-button span::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: -1.5px;
+  width: 1.5px;
+  height: 14px;
+  background: currentcolor;
+}
+
+.safari-chevron::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-color: currentcolor;
+  border-style: solid;
+  border-width: 0 0 1.8px 1.8px;
+}
+
+.safari-chevron-left::before {
+  transform: rotate(45deg);
+}
+
+.safari-chevron-right::before {
+  transform: rotate(225deg);
+}
+
+.safari-address-bar {
+  position: relative;
+  display: grid;
+  height: 34px;
+  grid-template-columns: 24px minmax(0, 1fr) 24px;
+  align-items: center;
+  justify-self: center;
+  width: min(360px, 100%);
+  border: 1px solid rgb(255 255 255 / 9%);
+  border-radius: 13px;
+  background: rgb(20 22 26 / 54%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 6%) inset,
+    0 1px 1px rgb(0 0 0 / 20%);
+}
+
+.safari-address-icon {
+  position: relative;
+  justify-self: end;
+  width: 11px;
+  height: 12px;
+  border: 1.6px solid rgb(244 246 248 / 58%);
+  border-top: 0;
+  border-radius: 2px;
+}
+
+.safari-address-icon::before {
+  content: "";
+  position: absolute;
+  margin-left: 2px;
+  margin-top: -5px;
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid rgb(244 246 248 / 58%);
+  border-bottom: 0;
+  border-radius: 7px 7px 0 0;
+}
+
+.safari-address-text {
+  overflow: hidden;
+  color: rgb(246 247 248 / 90%);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.safari-address-bar::after {
+  content: "";
+  justify-self: center;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid rgb(244 246 248 / 52%);
+  border-left-color: transparent;
+  border-radius: 999px;
+}
+
+.safari-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.safari-toolbar-actions span {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  color: rgb(244 246 248 / 78%);
+}
+
+.safari-translate-icon::before {
+  content: "A";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: rgb(255 255 255 / 8%);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.safari-reload-icon::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1.7px solid currentcolor;
+  border-left-color: transparent;
+  border-radius: 999px;
+}
+
+.safari-share-icon::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  border: 1.6px solid currentcolor;
+  border-top: 0;
+  border-radius: 2px;
+}
+
+.safari-share-icon::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 2px;
+  width: 1.6px;
+  height: 12px;
+  background: currentcolor;
+  box-shadow: -3px 3px 0 -1px currentcolor, 3px 3px 0 -1px currentcolor;
+}
+
+.safari-plus-icon::before,
+.safari-plus-icon::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  width: 12px;
+  height: 1.8px;
+  border-radius: 999px;
+  background: currentcolor;
+}
+
+.safari-plus-icon::after {
+  transform: rotate(90deg);
+}
+
+.safari-tabs-icon::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid currentcolor;
+  border-radius: 3px;
+  box-shadow: 4px 4px 0 -1px #25282e, 4px 4px 0 0 currentcolor;
+}
+
+.mac-app-window-resume {
+  border-color: rgb(255 255 255 / 8%);
+  background: #1d1d1f;
+  color: rgb(244 244 245 / 88%);
+}
+
+.notes-window-toolbar {
+  display: grid;
+  grid-template-columns: auto 42px minmax(110px, 1fr) auto auto auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 10px;
+  border-bottom: 1px solid rgb(255 255 255 / 9%);
+  background:
+    linear-gradient(180deg, rgb(39 45 45 / 98%), rgb(31 36 36 / 98%)),
+    #232828;
+  color: rgb(245 245 245 / 86%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 6%) inset;
+}
+
+.notes-window-toolbar .mac-window-controls {
+  padding-left: 0;
+}
+
+.notes-toolbar-button,
+.notes-toolbar-left-actions span,
+.notes-toolbar-center-actions,
+.notes-toolbar-right-actions span {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 10%);
+  background: rgb(255 255 255 / 5%);
+  color: rgb(245 245 245 / 78%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 7%) inset;
+}
+
+.notes-toolbar-button {
+  width: 38px;
+  height: 34px;
+  border-radius: 13px;
+}
+
+.notes-sidebar-button span {
+  position: relative;
+  width: 17px;
+  height: 15px;
+  border: 1.5px solid currentcolor;
+  border-radius: 2px;
+}
+
+.notes-sidebar-button span::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: -1.5px;
+  width: 1.5px;
+  height: 15px;
+  background: currentcolor;
+}
+
+.notes-toolbar-title {
+  min-width: 0;
+  line-height: 1.1;
+}
+
+.notes-toolbar-title strong,
+.notes-toolbar-title span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notes-toolbar-title strong {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.notes-toolbar-title span {
+  margin-top: 2px;
+  color: rgb(245 245 245 / 58%);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.notes-toolbar-left-actions,
+.notes-toolbar-right-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.notes-toolbar-left-actions span,
+.notes-toolbar-right-actions span {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 13px;
+}
+
+.notes-toolbar-center-actions {
+  display: flex;
+  gap: 14px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.notes-more-icon::before {
+  content: "...";
+  position: absolute;
+  top: 4px;
+  color: currentcolor;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.notes-compose-icon::before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1.7px solid currentcolor;
+  border-radius: 3px;
+}
+
+.notes-compose-icon::after {
+  content: "";
+  position: absolute;
+  width: 11px;
+  height: 1.8px;
+  transform: rotate(-45deg) translate(2px, -3px);
+  border-radius: 999px;
+  background: currentcolor;
+}
+
+.notes-checklist-icon,
+.notes-table-icon,
+.notes-attach-icon,
+.notes-share-icon,
+.notes-search-icon {
+  position: relative;
+}
+
+.notes-checklist-icon::before {
+  content: "";
+  width: 17px;
+  height: 14px;
+  background:
+    radial-gradient(circle at 2px 2px, currentcolor 0 1.5px, transparent 2px),
+    radial-gradient(circle at 2px 7px, currentcolor 0 1.5px, transparent 2px),
+    radial-gradient(circle at 2px 12px, currentcolor 0 1.5px, transparent 2px),
+    linear-gradient(currentcolor 0 0) 7px 1px / 10px 1.5px no-repeat,
+    linear-gradient(currentcolor 0 0) 7px 6px / 10px 1.5px no-repeat,
+    linear-gradient(currentcolor 0 0) 7px 11px / 10px 1.5px no-repeat;
+}
+
+.notes-table-icon::before {
+  content: "";
+  width: 18px;
+  height: 14px;
+  border: 1.5px solid currentcolor;
+  border-radius: 2px;
+  background:
+    linear-gradient(currentcolor 0 0) 0 50% / 100% 1.5px no-repeat,
+    linear-gradient(currentcolor 0 0) 50% 0 / 1.5px 100% no-repeat;
+}
+
+.notes-attach-icon::before {
+  content: "";
+  width: 15px;
+  height: 18px;
+  border: 1.7px solid currentcolor;
+  border-left-color: transparent;
+  border-radius: 9px;
+  transform: rotate(28deg);
+}
+
+.notes-share-icon::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid currentcolor;
+  border-top: 0;
+  border-radius: 2px;
+}
+
+.notes-share-icon::after {
+  content: "";
+  position: absolute;
+  width: 1.5px;
+  height: 13px;
+  transform: translateY(-4px);
+  background: currentcolor;
+}
+
+.notes-search-icon::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  border: 1.7px solid currentcolor;
+  border-radius: 999px;
+}
+
+.notes-search-icon::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 1.7px;
+  transform: translate(6px, 7px) rotate(45deg);
+  border-radius: 999px;
+  background: currentcolor;
+}
+
+.notes-window-content {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: 194px minmax(0, 1fr);
+  background: #1d1d1f;
+}
+
+.notes-sidebar {
+  overflow: hidden auto;
+  border-right: 1px solid rgb(255 255 255 / 10%);
+  background: #242a2a;
+  color: rgb(245 245 245 / 78%);
+}
+
+.notes-group {
+  padding: 10px 10px 0;
+}
+
+.notes-group h2 {
+  margin: 0 0 8px;
+  color: rgb(245 245 245 / 88%);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.notes-list-item {
+  padding: 8px 18px 8px 18px;
+  border-bottom: 1px solid rgb(255 255 255 / 9%);
+}
+
+.notes-list-item h3,
+.notes-list-item p,
+.notes-list-item span {
+  overflow: hidden;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notes-list-item h3 {
+  color: rgb(245 245 245 / 90%);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.notes-list-item p {
+  margin-top: 2px;
+  color: rgb(245 245 245 / 78%);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.notes-list-item span {
+  position: relative;
+  display: block;
+  margin-top: 2px;
+  padding-left: 14px;
+  color: rgb(245 245 245 / 58%);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.notes-list-item span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 11px;
+  height: 8px;
+  border: 1px solid currentcolor;
+  border-radius: 1px;
+}
+
+.notes-editor {
+  overflow: hidden;
+  padding: 9px 22px 24px;
+  background: #1f1f21;
+}
+
+.notes-editor time {
+  display: block;
+  color: rgb(245 245 245 / 48%);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.notes-empty-page {
+  height: calc(100% - 30px);
+  margin-top: 14px;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 3%) 1px, transparent 1px) 0 0 / 28px 28px,
+    transparent;
+}
+
+.mac-app-window-vibes,
+.mac-app-window-skills {
+  border-color: rgb(255 255 255 / 9%);
+  background: #202426;
+  color: rgb(246 247 248 / 88%);
+}
+
+.photos-window-toolbar,
+.appstore-window-toolbar {
+  display: grid;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  background:
+    linear-gradient(180deg, rgb(45 50 51 / 98%), rgb(32 37 38 / 98%)),
+    #222728;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 6%) inset;
+}
+
+.photos-window-toolbar {
+  grid-template-columns: auto 40px minmax(130px, 1fr) auto auto;
+  gap: 14px;
+}
+
+.photos-window-toolbar .mac-window-controls,
+.appstore-window-toolbar .mac-window-controls {
+  padding-left: 0;
+}
+
+.photos-sidebar-toggle,
+.photos-toolbar-actions span {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 10%);
+  background: rgb(255 255 255 / 6%);
+  color: rgb(246 247 248 / 78%);
+}
+
+.photos-sidebar-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: 13px;
+}
+
+.photos-sidebar-toggle span {
+  position: relative;
+  width: 17px;
+  height: 15px;
+  border: 1.5px solid currentcolor;
+  border-radius: 2px;
+}
+
+.photos-sidebar-toggle span::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: -1.5px;
+  width: 1.5px;
+  height: 15px;
+  background: currentcolor;
+}
+
+.photos-toolbar-title {
+  min-width: 0;
+  line-height: 1.1;
+}
+
+.photos-toolbar-title strong,
+.photos-toolbar-title span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.photos-toolbar-title strong {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.photos-toolbar-title span {
+  color: rgb(246 247 248 / 52%);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.photos-segmented-control {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 12%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 12%) inset,
+    0 8px 20px rgb(0 0 0 / 22%);
+}
+
+.photos-segmented-control span {
+  min-width: 78px;
+  padding: 8px 13px;
+  color: rgb(246 247 248 / 72%);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.photos-segmented-control .is-active {
+  border-radius: 14px;
+  background: rgb(255 255 255 / 22%);
+  color: white;
+}
+
+.photos-toolbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.photos-toolbar-actions span {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+}
+
+.photos-more-icon::before {
+  content: "...";
+  position: absolute;
+  top: 4px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.photos-info-icon::before {
+  content: "i";
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border: 1.6px solid currentcolor;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.photos-search-icon::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border: 1.8px solid currentcolor;
+  border-radius: 999px;
+}
+
+.photos-search-icon::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 1.8px;
+  transform: translate(7px, 8px) rotate(45deg);
+  background: currentcolor;
+}
+
+.photos-heart-icon::before {
+  content: "♡";
+  font-size: 22px;
+  line-height: 1;
+}
+
+.photos-share-icon::before,
+.photos-filter-icon::before,
+.photos-list-icon::before {
+  content: "";
+  width: 17px;
+  height: 14px;
+  border: 1.5px solid currentcolor;
+  border-radius: 3px;
+}
+
+.photos-list-icon::before {
+  height: 12px;
+  border-inline: 0;
+  background:
+    linear-gradient(currentcolor 0 0) 0 0 / 17px 1.5px no-repeat,
+    linear-gradient(currentcolor 0 0) 0 50% / 17px 1.5px no-repeat,
+    linear-gradient(currentcolor 0 0) 0 100% / 17px 1.5px no-repeat;
+}
+
+.photos-window-content {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: 210px minmax(0, 1fr);
+  background: #1f1f20;
+}
+
+.photos-sidebar {
+  overflow: hidden auto;
+  padding: 12px 10px;
+  border-right: 1px solid rgb(255 255 255 / 10%);
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 4%), transparent),
+    #242827;
+}
+
+.photos-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 0 9px;
+  border-radius: 7px;
+  color: rgb(246 247 248 / 86%);
+}
+
+.photos-sidebar-item.is-active {
+  background: rgb(255 255 255 / 11%);
+  color: #2997ff;
+}
+
+.photos-sidebar-item span {
+  width: 16px;
+  height: 16px;
+  border: 1.6px solid currentcolor;
+  border-radius: 4px;
+}
+
+.photos-sidebar-item p {
+  overflow: hidden;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.photos-library {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 18px;
+  background: #202020;
+}
+
+.photos-grid {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.photos-thumb {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 4px;
+  background: #f8f8f8;
+  object-fit: cover;
+}
+
+.photos-count {
+  margin: 16px 0 0;
+  color: rgb(246 247 248 / 92%);
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.appstore-window-toolbar {
+  grid-template-columns: auto 1fr;
+}
+
+.appstore-window-content {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: 222px minmax(0, 1fr);
+  overflow: hidden;
+  background: #222829;
+}
+
+.appstore-sidebar {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  padding: 15px 10px 18px;
+  border-right: 1px solid rgb(255 255 255 / 10%);
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 4%), transparent 78%),
+    #1d2224;
+}
+
+.appstore-sidebar-controls .mac-window-controls {
+  padding-left: 0;
+}
+
+.appstore-sidebar-controls {
+  display: flex;
+  height: 18px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.appstore-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  margin: 0 2px 18px;
+  padding: 0 11px;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 13%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 5%) inset;
+}
+
+.appstore-search span {
+  width: 11px;
+  height: 11px;
+  border: 1.6px solid rgb(246 247 248 / 54%);
+  border-radius: 999px;
+}
+
+.appstore-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: rgb(246 247 248 / 84%);
+  font-size: 13px;
+  outline: 0;
+}
+
+.appstore-search input::placeholder {
+  color: rgb(246 247 248 / 58%);
+}
+
+.appstore-nav-item {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 11px;
+  height: 39px;
+  padding: 0 10px;
+  border-radius: 7px;
+  color: rgb(246 247 248 / 86%);
+}
+
+.appstore-nav-item.is-active {
+  background: rgb(255 255 255 / 10%);
+  color: #0a84ff;
+}
+
+.appstore-nav-item span {
+  width: 17px;
+  height: 17px;
+  border: 1.7px solid currentcolor;
+  border-radius: 5px;
+}
+
+.appstore-nav-item p {
+  margin: 0;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.appstore-nav-item em {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 18%);
+  color: rgb(246 247 248 / 76%);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.appstore-account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  color: rgb(246 247 248 / 92%);
+}
+
+.appstore-account span {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 42%, #f2d8bd 0 22%, transparent 23%),
+    linear-gradient(135deg, var(--copper-ember), var(--evergreen-velvet));
+}
+
+.appstore-account p {
+  overflow: hidden;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.appstore-discover {
+  overflow: hidden auto;
+  padding: 54px 40px 34px;
+  background: #24292a;
+}
+
+.appstore-discover h2 {
+  margin: 0 0 10px;
+  color: rgb(246 247 248 / 94%);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.appstore-hero-card {
+  display: grid;
+  overflow: hidden;
+  min-height: 270px;
+  grid-template-columns: 235px minmax(0, 1fr);
+  border-radius: 9px;
+  background:
+    linear-gradient(90deg, rgb(78 55 82 / 92%) 0 30%, transparent 30%),
+    radial-gradient(circle at 83% 11%, #ff3bd4 0 22%, transparent 24%),
+    radial-gradient(circle at 72% 50%, #b8ff72 0 16%, transparent 18%),
+    linear-gradient(135deg, #ff42d2 0%, #fff06b 43%, #60f46d 100%);
+}
+
+.appstore-hero-card > div:first-child {
+  display: flex;
+  flex-direction: column;
+  padding: 47px 27px 24px;
+  color: white;
+}
+
+.appstore-hero-card p,
+.appstore-small-card p {
+  margin: 0 0 12px;
+  color: rgb(255 255 255 / 72%);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.appstore-hero-card h3,
+.appstore-small-card h3 {
+  margin: 0;
+  color: rgb(255 255 255 / 92%);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.07;
+}
+
+.appstore-hero-card > div:first-child span {
+  margin-top: auto;
+  color: rgb(255 255 255 / 86%);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.appstore-hero-art {
+  position: relative;
+}
+
+.appstore-hero-art span {
+  position: absolute;
+  border-radius: 20px;
+  box-shadow: 0 16px 30px rgb(35 18 80 / 28%);
+}
+
+.appstore-hero-art span:nth-child(1) {
+  left: 13%;
+  top: 23%;
+  width: 82px;
+  height: 82px;
+  transform: rotate(-22deg);
+  background: linear-gradient(135deg, #ff5fd0, #7b6cff);
+}
+
+.appstore-hero-art span:nth-child(2) {
+  right: 14%;
+  top: 12%;
+  width: 104px;
+  height: 104px;
+  transform: rotate(14deg);
+  background: linear-gradient(135deg, #ffe869, #ff79e2);
+}
+
+.appstore-hero-art span:nth-child(3) {
+  left: 43%;
+  bottom: 18%;
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1ab2ff, #6cff82);
+}
+
+.appstore-hero-art span:nth-child(4) {
+  right: 30%;
+  bottom: 25%;
+  width: 58px;
+  height: 58px;
+  transform: rotate(18deg);
+  background: linear-gradient(135deg, #a061ff, #ff62d2);
+}
+
+.appstore-hero-art span:nth-child(5) {
+  left: 54%;
+  top: 30%;
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #19a5ff, #1cd6d9);
+}
+
+.appstore-hero-art span:nth-child(6) {
+  right: 8%;
+  bottom: 20%;
+  width: 90px;
+  height: 90px;
+  transform: rotate(19deg);
+  background: linear-gradient(135deg, #38ff85, #2874ff 62%, #8e43ff);
+}
+
+.appstore-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.appstore-small-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 190px;
+  padding: 25px 30px;
+  border-radius: 10px;
+  background: #404548;
+}
+
+.appstore-small-card h3 {
+  max-width: 66%;
+  font-size: 23px;
+}
+
+.appstore-small-card span {
+  display: block;
+  max-width: 60%;
+  margin-top: 14px;
+  color: rgb(255 255 255 / 62%);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.appstore-small-card div {
+  position: absolute;
+  right: 26px;
+  bottom: 30px;
+  width: 124px;
+  height: 124px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 36% 36%, #2aff71 0 18%, transparent 19%),
+    linear-gradient(135deg, #1cd6a3, #d4ff2e 52%, #ff9b2f);
+}
+
+.appstore-small-card:nth-child(2) div {
+  background:
+    radial-gradient(circle at 75% 20%, #ffd78b 0 16%, transparent 17%),
+    linear-gradient(135deg, #756bff, #d469ff 54%, #28394e);
+}
+
+.appstore-section-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 14px;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  color: rgb(246 247 248 / 92%);
+}
+
+.appstore-section-footer strong {
+  font-size: 22px;
+  letter-spacing: -0.04em;
+}
+
+.appstore-section-footer span {
+  color: #0a84ff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+@keyframes avatar-side-arc {
+  0%,
+  100% {
+    transform: translate3d(-12px, 8px, 0) rotate(-1.5deg);
+  }
+
+  12.5% {
+    transform: translate3d(-6px, 0, 0) rotate(-0.75deg);
+  }
+
+  25% {
+    transform: translate3d(0, -5px, 0) rotate(0deg);
+  }
+
+  37.5% {
+    transform: translate3d(6px, 0, 0) rotate(0.75deg);
+  }
+
+  50% {
+    transform: translate3d(12px, 8px, 0) rotate(1.5deg);
+  }
+
+  62.5% {
+    transform: translate3d(6px, 0, 0) rotate(0.75deg);
+  }
+
+  75% {
+    transform: translate3d(0, -5px, 0) rotate(0deg);
+  }
+
+  87.5% {
+    transform: translate3d(-6px, 0, 0) rotate(-0.75deg);
+  }
+}
+
+.mac-dock {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgb(183 193 186 / 24%), rgb(255 255 255 / 3%)),
+    rgb(7 25 20 / 76%);
+  box-shadow:
+    0 18px 38px rgb(7 25 20 / 42%),
+    0 1px 0 rgb(183 193 186 / 40%) inset,
+    0 -1px 0 rgb(0 0 0 / 42%) inset;
+  backdrop-filter: blur(28px) saturate(1.28);
+}
+
+.mac-dock::before {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto;
+  height: 48%;
+  border-radius: 22px 22px 16px 16px;
+  background: linear-gradient(180deg, rgb(183 193 186 / 22%), rgb(255 255 255 / 0%));
+  pointer-events: none;
+}
+
+.mac-dock-item {
+  --pop-delay: 0ms;
+  width: 58px;
+  min-height: 66px;
+  opacity: 0;
+  animation: page-pop-in 680ms cubic-bezier(0.2, 1.15, 0.32, 1) var(--pop-delay) both;
+}
+
+.mac-dock-item::before {
+  content: attr(aria-label);
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  z-index: 3;
+  transform: translateX(-50%) translateY(6px);
+  border-radius: 7px;
+  background: rgb(7 25 20 / 88%);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  opacity: 0;
+  padding: 7px 9px;
+  pointer-events: none;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
+  white-space: nowrap;
+}
+
+.mac-dock-item:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dock-app-icon {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 9px rgb(7 25 20 / 34%));
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
+  transform: scale(1.24);
+}
+
+.mac-dock-item:hover .dock-app-icon,
+.mac-dock-item:hover .trash-icon {
+  filter: brightness(1.04) drop-shadow(0 11px 12px rgb(7 25 20 / 40%));
+}
+
+.mac-dock-item:hover .dock-app-icon {
+  transform: translateY(-7px) scale(1.34);
+}
+
+.mac-dock-item:hover .trash-icon {
+  transform: translateY(-7px) scale(1.1);
+}
+
+.dock-running-dot {
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: var(--copper-ember);
+  box-shadow: 0 1px 0 rgb(183 193 186 / 28%);
+}
+
+.dock-separator {
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+.trash-icon {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+  filter: drop-shadow(0 9px 11px rgb(7 25 20 / 38%));
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mac-desktop-icon,
+  .mac-dock-item,
+  .avatar-frame,
+  .comic-caption,
+  .comic-caption-text,
+  .comic-caption-arrow-wrap {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none;
+  }
+
+  .comic-caption {
+    transform: translateX(-50%) !important;
+  }
+
+  .avatar-bouncer {
+    animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .desktop-stage {
+    min-height: calc(100vh - 1.5rem);
+    overflow: hidden;
+  }
+
+  .folder-column {
+    position: relative;
+    min-height: 100%;
+  }
+
+  .folder-cluster,
+  .folder-cluster-item {
+    display: block;
+  }
+
+  .folder-cluster {
+    position: absolute;
+  }
+
+  .folder-cluster-1 {
+    left: 1%;
+    top: 3%;
+    width: 28rem;
+    height: 16rem;
+  }
+
+  .folder-cluster-2 {
+    left: 27%;
+    top: 37%;
+    width: 21rem;
+    height: 13rem;
+  }
+
+  .folder-cluster-3 {
+    left: 5%;
+    bottom: 4%;
+    width: 27rem;
+    height: 16rem;
+  }
+
+  .folder-cluster-item {
+    position: absolute;
+  }
+
+  .folder-cluster-1 .folder-cluster-item-1 {
+    left: 0.2rem;
+    top: 7.8rem;
+  }
+
+  .folder-cluster-1 .folder-cluster-item-2 {
+    left: 0.8rem;
+    top: 0.2rem;
+  }
+
+  .folder-cluster-1 .folder-cluster-item-3 {
+    left: 12rem;
+    top: 5.2rem;
+  }
+
+  .folder-cluster-2 .folder-cluster-item-1 {
+    left: 0.2rem;
+    top: 0.1rem;
+  }
+
+  .folder-cluster-2 .folder-cluster-item-2 {
+    left: 10.8rem;
+    top: 5.3rem;
+  }
+
+  .folder-cluster-3 .folder-cluster-item-1 {
+    left: 1.5rem;
+    top: 0.1rem;
+  }
+
+  .folder-cluster-3 .folder-cluster-item-2 {
+    left: 10.7rem;
+    top: 6rem;
+  }
+
+  .folder-cluster-3 .folder-cluster-item-3 {
+    left: 1.1rem;
+    top: 9.2rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .comic-profile {
+    --comic-avatar-left: 46%;
+    --comic-avatar-top: 38%;
+    --comic-avatar-size: 275px;
+    --comic-caption-gap: 1rem;
+    width: min(100%, 460px);
+    height: 760px;
+    min-height: 760px;
+    margin-top: -1rem;
+  }
+
+  .comic-caption {
+    width: min(100%, 420px);
+  }
+
+  .comic-caption-arrow-wrap {
+    width: 38px;
+  }
+
+  .comic-caption-text {
+    width: min(100%, 24rem);
+    min-height: 7.2rem;
+    font-size: clamp(1.18rem, 1rem + 1vw, 1.68rem);
+  }
+
+  .comic-copy-who {
+    left: 0;
+    right: 0;
+    top: 1%;
+    width: min(66%, 285px);
+    margin-inline: auto;
+  }
+
+  .comic-copy-name {
+    left: 0;
+    right: 0;
+    top: 12%;
+    width: min(72%, 318px);
+    margin-inline: auto;
+  }
+
+  .comic-copy-me {
+    left: 0;
+    top: 45%;
+    width: min(13%, 58px);
+  }
+
+  .comic-role-group {
+    left: 20%;
+    top: 73%;
+    width: 70%;
+    height: 25%;
+  }
+
+  .comic-copy-somewhat {
+    left: 10%;
+    top: 0;
+    width: 55%;
+  }
+
+  .comic-copy-product {
+    left: 15%;
+    top: 23%;
+    width: 45%;
+  }
+
+  .comic-copy-enthusiast {
+    left: 52%;
+    top: 23%;
+    width: 48%;
+  }
+
+  .comic-copy-strategist {
+    left: 27%;
+    top: 49%;
+    width: 50%;
+  }
+
+  .comic-copy-executor {
+    left: 30%;
+    top: 70%;
+    width: 44%;
+  }
+
+  .comic-copy-builder {
+    left: 36%;
+    top: 90%;
+    width: 36%;
+  }
+}
+
+@media (max-width: 767px) {
+  .portrait.head {
+    width: 84vw;
+    height: 62vh;
+  }
+
+  .portrait.cap {
+    width: 92vw;
+  }
+
+  .portrait.brim,
+  .portrait.glasses {
+    width: 70vw;
+  }
+
+  .mac-dock {
+    border-radius: 20px;
+    gap: 8px;
+    max-width: calc(100vw - 18px);
+    overflow-x: auto;
+    padding: 9px 10px 13px;
+  }
+
+  .mac-dock-item {
+    width: 48px;
+    min-height: 56px;
+  }
+
+  .dock-app-icon {
+    width: 48px;
+    height: 48px;
+    transform: scale(1.22);
+  }
+
+  .trash-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .dock-separator {
+    height: 48px;
+  }
+
+  .mac-folder-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .comic-profile {
+    --comic-avatar-left: 46%;
+    --comic-avatar-top: 35%;
+    --comic-avatar-size: 270px;
+    --comic-caption-gap: 0.9rem;
+    width: min(100%, 420px);
+    height: 800px;
+    min-height: 800px;
+    margin-top: -0.75rem;
+  }
+
+  .comic-caption {
+    width: min(100%, 380px);
+    gap: 0.45rem;
+  }
+
+  .comic-caption-text {
+    width: min(100%, 22rem);
+    min-height: 7.8rem;
+  }
+
+  .comic-copy-who {
+    left: 0;
+    right: 0;
+    top: 1%;
+    width: min(76%, 300px);
+    margin-inline: auto;
+  }
+
+  .comic-copy-name {
+    left: 0;
+    right: 0;
+    top: 10%;
+    width: min(82%, 326px);
+    margin-inline: auto;
+  }
+
+  .comic-copy-me {
+    left: 0;
+    top: 41%;
+    width: min(14%, 56px);
+  }
+
+  .comic-role-group {
+    left: 15%;
+    top: 71%;
+    width: 78%;
+    height: 25%;
+  }
+
+  .comic-copy-somewhat {
+    left: 9%;
+    top: 0;
+    width: 56%;
+  }
+
+  .comic-copy-product {
+    left: 14%;
+    top: 23%;
+    width: 47%;
+  }
+
+  .comic-copy-enthusiast {
+    left: 53%;
+    top: 23%;
+    width: 47%;
+  }
+
+  .comic-copy-strategist {
+    left: 27%;
+    top: 49%;
+    width: 52%;
+  }
+
+  .comic-copy-executor {
+    left: 31%;
+    top: 70%;
+    width: 45%;
+  }
+
+  .comic-copy-builder {
+    left: 37%;
+    top: 90%;
+    width: 36%;
+  }
+
+  .desktop-stage {
+    min-height: auto;
+    padding-bottom: 8.5rem;
+  }
+
+  .folder-column {
+    width: 100%;
+    padding-bottom: 1.5rem;
+  }
+
+  .folder-cluster,
+  .folder-cluster-item {
+    display: contents;
+  }
+
+  .mac-window-layer {
+    padding: 3.75rem 0.75rem 7.5rem;
+  }
+
+  .mac-app-window {
+    left: 50% !important;
+    top: 4.25rem !important;
+    width: calc(100vw - 1.5rem);
+    height: min(56vh, 390px);
+    transform: translateX(-50%);
+  }
+
+  .notes-window-toolbar {
+    grid-template-columns: auto 34px minmax(72px, 1fr) auto;
+    gap: 7px;
+  }
+
+  .notes-toolbar-left-actions,
+  .notes-toolbar-center-actions {
+    display: none;
+  }
+
+  .notes-window-content {
+    grid-template-columns: 132px minmax(0, 1fr);
+  }
+
+  .notes-group {
+    padding-inline: 8px;
+  }
+
+  .notes-list-item {
+    padding-inline: 8px;
+  }
+
+  .photos-window-toolbar {
+    grid-template-columns: auto 34px minmax(68px, 1fr) auto;
+    gap: 7px;
+  }
+
+  .photos-segmented-control {
+    display: none;
+  }
+
+  .photos-window-content {
+    grid-template-columns: 118px minmax(0, 1fr);
+  }
+
+  .photos-sidebar {
+    padding-inline: 7px;
+  }
+
+  .photos-sidebar-item {
+    padding-inline: 6px;
+  }
+
+  .photos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .appstore-window-content {
+    grid-template-columns: 126px minmax(0, 1fr);
+  }
+
+  .appstore-sidebar {
+    padding: 14px 7px;
+  }
+
+  .appstore-search {
+    display: none;
+  }
+
+  .appstore-nav-item {
+    gap: 7px;
+    padding-inline: 7px;
+  }
+
+  .appstore-discover {
+    padding: 18px 14px;
+  }
+
+  .appstore-discover h2 {
+    font-size: 25px;
+  }
+
+  .appstore-hero-card {
+    min-height: 180px;
+    grid-template-columns: 1fr;
+  }
+
+  .appstore-hero-card > div:first-child {
+    padding: 24px 22px;
+  }
+
+  .appstore-card-grid {
+    grid-template-columns: 1fr;
+  }
 }
