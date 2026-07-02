@@ -21,16 +21,39 @@ const isAvatarEmotion = (value: string | undefined): value is AvatarEmotion =>
 export default function TrackingAvatar() {
   const avatarRef = useRef<HTMLDivElement>(null);
   const [activeEmotion, setActiveEmotion] = useState<AvatarEmotion | null>(null);
+  const repulsionRef = useRef({ x: 0, y: 0, vx: 0, vy: 0 });
+  const animationRef = useRef<number>(0);
 
   useEffect(() => {
-    const avatar = avatarRef.current;
+    const currentAvatar = avatarRef.current;
 
-    if (!avatar) {
+    if (!currentAvatar) {
       return;
     }
 
+    const avatarElement: HTMLDivElement = currentAvatar;
+
+    function animateRepulsion() {
+      const state = repulsionRef.current;
+      const springStrength = 0.08;
+      const damping = 0.85;
+
+      // Spring back to origin
+      state.vx += (0 - state.x) * springStrength;
+      state.vy += (0 - state.y) * springStrength;
+      state.vx *= damping;
+      state.vy *= damping;
+      state.x += state.vx;
+      state.y += state.vy;
+
+      avatarElement.style.setProperty("--repulsion-x", `${state.x}px`);
+      avatarElement.style.setProperty("--repulsion-y", `${state.y}px`);
+
+      animationRef.current = requestAnimationFrame(animateRepulsion);
+    }
+
     const handlePointerMove = (event: PointerEvent) => {
-      const rect = avatar.getBoundingClientRect();
+      const rect = avatarElement.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       const deltaX = event.clientX - centerX;
@@ -51,14 +74,28 @@ export default function TrackingAvatar() {
       const horizontalBias = Math.max(3, rect.width * 0.01);
       const pupilY = easedY * verticalTravel;
 
-      avatar.style.setProperty("--pupil-x", `${pupilX + horizontalBias}px`);
-      avatar.style.setProperty("--pupil-y", `${pupilY}px`);
+      avatarElement.style.setProperty("--pupil-x", `${pupilX + horizontalBias}px`);
+      avatarElement.style.setProperty("--pupil-y", `${pupilY}px`);
+
+      // Repulsion effect when cursor is close
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      const repulsionRadius = rect.width * 0.6;
+      const repulsionStrength = 25;
+
+      if (distance < repulsionRadius && distance > 0) {
+        const force = (1 - distance / repulsionRadius) * repulsionStrength;
+        const angle = Math.atan2(-deltaY, -deltaX);
+        repulsionRef.current.vx += Math.cos(angle) * force * 0.15;
+        repulsionRef.current.vy += Math.sin(angle) * force * 0.15;
+      }
     };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    animationRef.current = requestAnimationFrame(animateRepulsion);
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
+      cancelAnimationFrame(animationRef.current);
     };
   }, []);
 

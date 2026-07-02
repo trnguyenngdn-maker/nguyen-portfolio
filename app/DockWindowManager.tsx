@@ -20,6 +20,32 @@ type OpenWindow = {
   zIndex: number;
 };
 
+type NoteItem = {
+  title: string;
+  folder: string;
+  content?: string[];
+  checklistSections?: {
+    heading: string;
+    items: string[];
+  }[];
+  pdfHref?: string;
+  download?: string;
+};
+
+type InterestIcon =
+  | "restaurant"
+  | "flight"
+  | "music"
+  | "palette"
+  | "coffee";
+
+type InterestCategory = {
+  id: string;
+  label: string;
+  icon: InterestIcon;
+  photos: string[];
+};
+
 const isWindowApp = (value: string | undefined): value is WindowApp =>
   value === "contact" ||
   value === "education" ||
@@ -64,43 +90,183 @@ const noteGroups = [
   {
     title: "Pinned",
     notes: [
-      ["Suivi depense Juine", "09:06  Titre de transp..."],
-      ["Cool phrases", "02/06/2026  a full cir..."],
-      ["People I can conn...", "09/01/2026  Locked"],
-      ["1. Starting Con...", "21/06/2025  1. Let's ki..."],
-      ["Idioms and expres...", "18/05/2025  Rant: nói..."],
-      ["Phrasal verbs", "12/05/2025  Pull up:..."],
+      {
+        title: "About me",
+        folder: "Notes",
+        content: [
+          "Product Manager with 3+ years of international experience across B2B SaaS, consumer apps, and 0-to-1 product launches. I am a hands-on doer who turns ideas into clear strategy, concrete execution, and measurable business impact.",
+        ],
+        checklistSections: [
+          {
+            heading: "I am a Product Manager with an emphasis on:",
+            items: [
+              "User research",
+              "Design",
+              "Delightful user experience",
+              "Complex systems",
+            ],
+          },
+          {
+            heading: "I have lived in:",
+            items: [
+              "Vietnam",
+              "France",
+              "Germany",
+              "Switzerland",
+              "Liechtenstein",
+            ],
+          },
+          {
+            heading: "I have domain knowledge in:",
+            items: [
+              "Identity verification technologies",
+              "E-signature",
+              "Cybersecurity",
+              "Design systems",
+            ],
+          },
+          {
+            heading: "I thrive in:",
+            items: [
+              "International teams",
+              "Multidisciplinary positions",
+              "Fast-paced environments",
+            ],
+          },
+          {
+            heading: "I am fluent in:",
+            items: ["English", "French", "Vietnamese"],
+          },
+        ],
+      },
+      {
+        title: "CV in English",
+        folder: "Resume",
+        pdfHref: "/resumes/trung-nguyen-resume-en.pdf",
+        download: "TrungNguyenNguyen_resume_English.pdf",
+      },
+      {
+        title: "CV in French",
+        folder: "Resume",
+        pdfHref: "/resumes/trung-nguyen-resume-fr.pdf",
+        download: "TrungNguyenNguyen_resume_French.pdf",
+      },
+    ] satisfies NoteItem[],
+  },
+];
+
+const defaultSelectedNote = noteGroups[0].notes[0];
+
+const interestCategories: InterestCategory[] = [
+  {
+    id: "eat",
+    label: "Eat",
+    icon: "restaurant",
+    photos: [
+      "/interests/eat/eat-16.jpg",
+      "/interests/eat/eat-01.jpg",
+      "/interests/eat/eat-02.jpg",
+      "/interests/eat/eat-13.jpg",
+      "/interests/eat/eat-04.jpg",
+      "/interests/eat/eat-05.jpg",
+      "/interests/eat/eat-06.jpg",
+      "/interests/eat/eat-07.jpg",
+      "/interests/eat/eat-14.jpg",
+      "/interests/eat/eat-09.jpg",
+      "/interests/eat/eat-10.jpg",
+      "/interests/eat/eat-11.jpg",
+      "/interests/eat/eat-12.jpg",
+      "/interests/eat/eat-15.jpg",
     ],
   },
   {
-    title: "Today",
-    notes: [["Portfolio website", "09:33  where: /Users/..."]],
+    id: "travel",
+    label: "Travel",
+    icon: "flight",
+    photos: [
+      "/interests/travel-01.jpg",
+      "/interests/travel-02.jpg",
+      "/interests/travel-03.jpg",
+      "/interests/travel-04.jpg",
+      "/interests/travel-05.jpg",
+      "/interests/travel-06.jpg",
+      "/interests/travel-07.jpg",
+      "/interests/travel-08.jpg",
+      "/interests/travel-09.jpg",
+      "/interests/travel-10.jpg",
+      "/interests/travel-11.jpg",
+      "/interests/travel-12.jpg",
+      "/interests/travel-13.jpg",
+      "/interests/travel-14.jpg",
+      "/interests/travel-15.jpg",
+      "/interests/travel-16.jpg",
+      "/interests/travel-17.jpg",
+      "/interests/travel-18.jpg",
+      "/interests/travel-19.jpg",
+    ],
   },
   {
-    title: "Yesterday",
-    notes: [["To do", "Yesterday  To-do Cla..."]],
+    id: "listen",
+    label: "Listen",
+    icon: "music",
+    photos: [
+      "/interests/listen-11.jpg",
+      "/interests/listen-12.jpg",
+      "/interests/listen-13.jpg",
+      "/interests/listen-14.jpg",
+      "/interests/listen-15.jpg",
+      "/interests/listen-01.jpg",
+      "/interests/listen-02.jpg",
+      "/interests/listen-03.jpg",
+      "/interests/listen-04.jpg",
+      "/interests/listen-05.jpg",
+      "/interests/listen-06.jpg",
+      "/interests/listen-07.jpg",
+      "/interests/listen-08.jpg",
+      "/interests/listen-09.jpg",
+      "/interests/listen-10.jpg",
+    ],
   },
-];
-
-const photoThumbnails = [
-  "/portfolio-assets/avatar-emotion-claude-v2.png",
-  "/portfolio-assets/avatar-emotion-notes.png",
-  "/portfolio-assets/avatar-emotion-mail-v2.png",
-  "/portfolio-assets/avatar-base-no-pupils.png",
-  "/portfolio-assets/avatar-emotion-app-store-v2.png",
-  "/portfolio-assets/avatar-emotion-photos.png",
-];
-
-const photosSidebarItems = [
-  "Library",
-  "Collections",
-  "Favourites",
-  "Recently Saved",
-  "Map",
-  "Videos",
-  "Screenshots",
-  "People & Pets",
-  "Recently Deleted",
+  {
+    id: "create",
+    label: "Craft",
+    icon: "palette",
+    photos: [
+      "/interests/create-01.jpg",
+      "/interests/create-02.jpg",
+      "/interests/create-03.jpg",
+      "/interests/create-04.jpg",
+      "/interests/create-05.jpg",
+      "/interests/create-06.jpg",
+      "/interests/create-07.jpg",
+      "/interests/create-08.jpg",
+      "/interests/create-09.jpg",
+      "/interests/create-10.jpg",
+      "/interests/create-11.jpg",
+      "/interests/create-12.jpg",
+      "/interests/create-13.jpg",
+      "/interests/create-14.jpg",
+    ],
+  },
+  {
+    id: "coffee",
+    label: "Sip",
+    icon: "coffee",
+    photos: [
+      "/interests/drink-04.jpg",
+      "/interests/drink-01.jpg",
+      "/interests/drink-02.jpg",
+      "/interests/drink-03.jpg",
+      "/interests/drink-05.jpg",
+      "/interests/drink-06.jpg",
+      "/interests/drink-07.jpg",
+      "/interests/drink-08.jpg",
+      "/interests/drink-09.jpg",
+      "/interests/drink-10.jpg",
+      "/interests/drink-11.jpg",
+      "/interests/drink-12.jpg",
+    ],
+  },
 ];
 
 const appStoreNavItems = [
@@ -133,9 +299,59 @@ const folderSections = [
   ],
 ];
 
+function InterestSidebarIcon({ icon }: { icon: InterestIcon }) {
+  if (icon === "restaurant") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8.1 13.34 10.96 10.5l-1.41-1.41-2.12 2.12-4.24-4.24L1.78 8.38zm6.31-9.18h-1.56v6.75c0 1.07.83 1.94 1.87 2.06V20h1.56v-6.03c1.04-.12 1.87-.99 1.87-2.06V4.16h-1.56v3.12h-1.09zm5.07 0v8.75h1.56V20h1.56V4.16z" />
+      </svg>
+    );
+  }
+
+  if (icon === "flight") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m21 16-8.5-2.27V6.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v7.23L1 16v2l8.5-1.5V21l-2.5 1.5V24l4-1 4 1v-1.5L12.5 21v-4.5L21 18z" />
+      </svg>
+    );
+  }
+
+  if (icon === "music") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3v10.55A4 4 0 1 0 14 17V7h6V3z" />
+      </svg>
+    );
+  }
+
+  if (icon === "palette") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3a9 9 0 0 0 0 18h1.6a2.4 2.4 0 0 0 0-4.8h-1.18a1.4 1.4 0 0 1 0-2.8H14A7 7 0 0 0 14 3zm-4.5 9A1.5 1.5 0 1 1 9 10.5 1.5 1.5 0 0 1 7.5 12m3-4A1.5 1.5 0 1 1 12 6.5 1.5 1.5 0 0 1 10.5 8m3 0A1.5 1.5 0 1 1 15 6.5 1.5 1.5 0 0 1 13.5 8m3 4a1.5 1.5 0 1 1 1.5-1.5A1.5 1.5 0 0 1 16.5 12" />
+      </svg>
+    );
+  }
+
+  if (icon === "coffee") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18.5 3H6v10a4 4 0 0 0 4 4h5a4 4 0 0 0 3.87-3H19a3 3 0 0 0 0-6h-.5zm0 8h-.63V6H19a2 2 0 0 1 0 4zM6 19h14v2H6z" />
+      </svg>
+    );
+  }
+
+  return null;
+}
+
 export default function DockWindowManager() {
   const [windows, setWindows] = useState<OpenWindow[]>([]);
   const [nextZIndex, setNextZIndex] = useState(1);
+  const [selectedNote, setSelectedNote] = useState<NoteItem>(defaultSelectedNote);
+  const [selectedInterestId, setSelectedInterestId] = useState("eat");
+
+  const selectedInterest =
+    interestCategories.find((category) => category.id === selectedInterestId) ??
+    interestCategories[0];
 
   useEffect(() => {
     const handleDockClick = (event: MouseEvent) => {
@@ -352,19 +568,68 @@ export default function DockWindowManager() {
                   {noteGroups.map((group) => (
                     <section className="notes-group" key={group.title}>
                       <h2>{group.title}</h2>
-                      {group.notes.map(([title, preview]) => (
-                        <article className="notes-list-item" key={title}>
-                          <h3>{title}</h3>
-                          <p>{preview}</p>
-                          <span>Notes</span>
-                        </article>
+                      {group.notes.map((note) => (
+                        <button
+                          type="button"
+                          className={`notes-list-item notes-list-button ${
+                            selectedNote.title === note.title ? "is-active" : ""
+                          }`}
+                          key={note.title}
+                          onClick={() => setSelectedNote(note)}
+                        >
+                          <h3>{note.title}</h3>
+                          <span>{note.folder}</span>
+                        </button>
                       ))}
                     </section>
                   ))}
                 </aside>
                 <main className="notes-editor">
                   <time dateTime="2026-04-03T15:54">3 April 2026 at 15:54</time>
-                  <div className="notes-empty-page" />
+                  <article
+                    className={`notes-document ${
+                      selectedNote.pdfHref ? "notes-document-pdf" : ""
+                    }`}
+                  >
+                    <header className="notes-document-header">
+                      <h2>{selectedNote.title}</h2>
+                      {selectedNote.pdfHref ? (
+                        <a
+                          className="notes-download-button"
+                          href={selectedNote.pdfHref}
+                          download={selectedNote.download}
+                        >
+                          Download PDF
+                        </a>
+                      ) : null}
+                    </header>
+                    {selectedNote.pdfHref ? (
+                      <iframe
+                        className="notes-pdf-frame"
+                        src={`${selectedNote.pdfHref}#view=FitH`}
+                        title={selectedNote.title}
+                      />
+                    ) : (
+                      <div className="notes-document-copy">
+                        {selectedNote.content?.map((paragraph) => (
+                          <p key={paragraph}>{paragraph}</p>
+                        ))}
+                        {selectedNote.checklistSections?.map((section) => (
+                          <section
+                            className="notes-checklist-section"
+                            key={section.heading}
+                          >
+                            <h3>{section.heading}</h3>
+                            <ul className="notes-checklist">
+                              {section.items.map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          </section>
+                        ))}
+                      </div>
+                    )}
+                  </article>
                 </main>
               </div>
             </>
@@ -383,13 +648,8 @@ export default function DockWindowManager() {
                   <span aria-hidden="true" />
                 </button>
                 <div className="photos-toolbar-title">
-                  <strong>Library</strong>
+                  <strong>My interests</strong>
                   <span>23 Jun 2026</span>
-                </div>
-                <div className="photos-segmented-control" aria-hidden="true">
-                  <span>Years</span>
-                  <span>Months</span>
-                  <span className="is-active">All Photos</span>
                 </div>
                 <div className="photos-toolbar-actions" aria-hidden="true">
                   <span className="photos-filter-icon" />
@@ -403,21 +663,25 @@ export default function DockWindowManager() {
               </header>
               <div className="photos-window-content">
                 <aside className="photos-sidebar">
-                  {photosSidebarItems.map((item, index) => (
-                    <div
+                  {interestCategories.map((item) => (
+                    <button
+                      type="button"
                       className={`photos-sidebar-item ${
-                        index === 0 ? "is-active" : ""
+                        selectedInterest.id === item.id ? "is-active" : ""
                       }`}
-                      key={item}
+                      key={item.id}
+                      onClick={() => setSelectedInterestId(item.id)}
                     >
-                      <span aria-hidden="true" />
-                      <p>{item}</p>
-                    </div>
+                      <span className="photos-sidebar-icon" aria-hidden="true">
+                        <InterestSidebarIcon icon={item.icon} />
+                      </span>
+                      <p>{item.label}</p>
+                    </button>
                   ))}
                 </aside>
                 <main className="photos-library">
                   <div className="photos-grid">
-                    {photoThumbnails.map((src) => (
+                    {selectedInterest.photos.map((src) => (
                       <Image
                         alt=""
                         src={src}
@@ -429,7 +693,9 @@ export default function DockWindowManager() {
                       />
                     ))}
                   </div>
-                  <p className="photos-count">77 Photos, 34 Videos</p>
+                  <p className="photos-count">
+                    {selectedInterest.photos.length} Photos
+                  </p>
                 </main>
               </div>
             </>

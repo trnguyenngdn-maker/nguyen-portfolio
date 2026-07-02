@@ -7,6 +7,7 @@ type DesktopFolder = {
   id: string;
   title: string;
   subtitle: string;
+  iconSrc: string;
 };
 
 type DockApp = {
@@ -33,42 +34,50 @@ const folders: DesktopFolder[] = [
   {
     id: "cybersecurity-consultant-2022",
     title: "Cybersecurity Consultant",
-    subtitle: "2022",
+    subtitle: "2023",
+    iconSrc: "/dock-icons/folder.png",
   },
   {
     id: "product-manager-2023",
     title: "Product Manager",
-    subtitle: "2023",
+    subtitle: "2024",
+    iconSrc: "/dock-icons/folder-yellow.png",
   },
   {
     id: "product-management-consultant-2024",
     title: "Product Management Consultant",
     subtitle: "2024",
+    iconSrc: "/dock-icons/folder-yellow.png",
   },
   {
     id: "product-manager-2025-a",
     title: "Product Manager",
     subtitle: "2025",
+    iconSrc: "/dock-icons/folder-purple.png",
   },
   {
     id: "product-manager-2025-b",
     title: "Product Manager",
     subtitle: "2025",
+    iconSrc: "/dock-icons/folder-purple.png",
   },
   {
     id: "product-builder-2026-a",
     title: "Product Builder",
     subtitle: "2026",
+    iconSrc: "/dock-icons/folder-green.png",
   },
   {
     id: "product-builder-2026-b",
     title: "Product Builder",
     subtitle: "2026",
+    iconSrc: "/dock-icons/folder-green.png",
   },
   {
     id: "physical-product-builder-next",
     title: "Physical Product Builder",
-    subtitle: "Next",
+    subtitle: "2026",
+    iconSrc: "/dock-icons/folder-green.png",
   },
 ];
 
@@ -101,7 +110,7 @@ const dockApps: DockApp[] = [
     avatarEmotion: "notes",
   },
   {
-    label: "My Vibes",
+    label: "My interests",
     iconSrc: "/dock-icons/photos.png",
     windowApp: "vibes",
     avatarEmotion: "photos",
@@ -115,9 +124,10 @@ const dockApps: DockApp[] = [
 ];
 
 const folderClusters = [
-  folders.slice(0, 3),
-  folders.slice(3, 5),
-  folders.slice(5),
+  folders.filter((folder) => folder.subtitle === "2023"),
+  folders.filter((folder) => folder.subtitle === "2024"),
+  folders.filter((folder) => folder.subtitle === "2025"),
+  folders.filter((folder) => folder.subtitle === "2026"),
 ];
 
 const folderClusterOffsets = folderClusters.reduce<number[]>(
@@ -133,6 +143,7 @@ function FolderShortcut({
   id,
   title,
   subtitle,
+  iconSrc,
   introDelay,
 }: DesktopFolder & { introDelay: number }) {
   return (
@@ -145,7 +156,7 @@ function FolderShortcut({
         style={{ "--pop-delay": `${introDelay}ms` } as CSSProperties}
       >
         <Image
-          src="/dock-icons/folder.png"
+          src={iconSrc}
           alt=""
           width={128}
           height={128}
