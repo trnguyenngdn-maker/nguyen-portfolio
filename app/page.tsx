@@ -7,6 +7,7 @@ type DesktopFolder = {
   id: string;
   title: string;
   subtitle: string;
+  year: string;
   iconSrc: string;
 };
 
@@ -32,82 +33,82 @@ type DockApp = {
 
 const folders: DesktopFolder[] = [
   {
-    id: "cybersecurity-consultant-2022",
-    title: "Cybersecurity Consultant",
-    subtitle: "2023",
-    iconSrc: "/dock-icons/folder.png",
+    id: "fepha-founder-2026",
+    title: "Founder, Fepha",
+    subtitle: "Vietnamese specialty coffee · 2026",
+    year: "2026",
+    iconSrc: "/project-icons/fepha.png",
   },
   {
-    id: "product-manager-2023",
-    title: "Product Manager",
-    subtitle: "2024",
-    iconSrc: "/dock-icons/folder-yellow.png",
+    id: "ghostcatch-founder-2026",
+    title: "Founder, GhostCatch",
+    subtitle: "Subscription Manager · 2026",
+    year: "2026",
+    iconSrc: "/project-icons/ghostcatch.png",
   },
   {
-    id: "product-management-consultant-2024",
-    title: "Product Management Consultant",
-    subtitle: "2024",
-    iconSrc: "/dock-icons/folder-yellow.png",
+    id: "scrollar-founder-2026",
+    title: "Founder, Scrollar",
+    subtitle: "Screen Time Manager · 2026",
+    year: "2026",
+    iconSrc: "/project-icons/scrollar.png",
   },
   {
-    id: "product-manager-2025-a",
-    title: "Product Manager",
-    subtitle: "2025",
-    iconSrc: "/dock-icons/folder-purple.png",
+    id: "docusign-pm-2025",
+    title: "Product Manager, Docusign",
+    subtitle: "Identity Verification · 2025",
+    year: "2025",
+    iconSrc: "/project-icons/docusign.png",
   },
   {
-    id: "product-manager-2025-b",
-    title: "Product Manager",
-    subtitle: "2025",
-    iconSrc: "/dock-icons/folder-purple.png",
+    id: "loreal-ux-2024",
+    title: "UX Researcher, L'Oreal",
+    subtitle: "CMI · 2024",
+    year: "2024",
+    iconSrc: "/project-icons/loreal.png",
   },
   {
-    id: "product-builder-2026-a",
-    title: "Product Builder",
-    subtitle: "2026",
-    iconSrc: "/dock-icons/folder-green.png",
+    id: "axa-pm-2024",
+    title: "Product Manager, AXA",
+    subtitle: "Design System · 2024",
+    year: "2024",
+    iconSrc: "/project-icons/axa.webp",
   },
   {
-    id: "product-builder-2026-b",
-    title: "Product Builder",
-    subtitle: "2026",
-    iconSrc: "/dock-icons/folder-green.png",
-  },
-  {
-    id: "physical-product-builder-next",
-    title: "Physical Product Builder",
-    subtitle: "2026",
-    iconSrc: "/dock-icons/folder-green.png",
+    id: "darkfindr-pm-2023",
+    title: "Product Manager, DarkFindR",
+    subtitle: "Darkweb Monitoring · 2023",
+    year: "2023",
+    iconSrc: "/project-icons/darkfindr-v2.png",
   },
 ];
 
 const dockApps: DockApp[] = [
   {
-    label: "Contact Me",
-    iconSrc: "/dock-icons/mail.png",
-    windowApp: "contact",
-    avatarEmotion: "mail",
-    active: true,
+    label: "Resume",
+    iconSrc: "/dock-icons/notes.png",
+    windowApp: "resume",
+    avatarEmotion: "notes",
   },
   {
-    label: "Educations",
-    iconSrc: "/dock-icons/safari.png",
-    windowApp: "education",
-    avatarEmotion: "safari",
-    active: true,
+    label: "My skills",
+    iconSrc: "/dock-icons/app-store.png",
+    windowApp: "skills",
+    avatarEmotion: "app-store",
   },
   {
-    label: "My assistant",
+    label: "How I think",
     iconSrc: "/dock-icons/claude.png",
     windowApp: "assistant",
     avatarEmotion: "claude",
     active: true,
   },
   {
-    label: "Resume",
-    iconSrc: "/dock-icons/notes.png",
-    windowApp: "resume",
-    avatarEmotion: "notes",
+    label: "Recommendations",
+    iconSrc: "/dock-icons/safari.png",
+    windowApp: "education",
+    avatarEmotion: "safari",
+    active: true,
   },
   {
     label: "My interests",
@@ -116,18 +117,19 @@ const dockApps: DockApp[] = [
     avatarEmotion: "photos",
   },
   {
-    label: "My skills",
-    iconSrc: "/dock-icons/app-store.png",
-    windowApp: "skills",
-    avatarEmotion: "app-store",
+    label: "Contact Me",
+    iconSrc: "/dock-icons/mail.png",
+    windowApp: "contact",
+    avatarEmotion: "mail",
+    active: true,
   },
 ];
 
 const folderClusters = [
-  folders.filter((folder) => folder.subtitle === "2023"),
-  folders.filter((folder) => folder.subtitle === "2024"),
-  folders.filter((folder) => folder.subtitle === "2025"),
-  folders.filter((folder) => folder.subtitle === "2026"),
+  folders.filter((folder) => folder.year === "2026"),
+  folders.filter((folder) => folder.year === "2025"),
+  folders.filter((folder) => folder.year === "2024"),
+  folders.filter((folder) => folder.year === "2023"),
 ];
 
 const folderClusterOffsets = folderClusters.reduce<number[]>(
@@ -146,6 +148,10 @@ function FolderShortcut({
   iconSrc,
   introDelay,
 }: DesktopFolder & { introDelay: number }) {
+  const role = title.startsWith("Founder")
+    ? "Product Founder"
+    : "Professional Experience";
+
   return (
     <div className="group w-[118px]">
       <button
@@ -153,6 +159,8 @@ function FolderShortcut({
         className="mac-desktop-icon flex w-full flex-col items-center gap-2 text-center"
         data-folder-window={id}
         data-folder-title={`${title} ${subtitle}`}
+        data-folder-icon={iconSrc}
+        data-folder-role={role}
         style={{ "--pop-delay": `${introDelay}ms` } as CSSProperties}
       >
         <Image
