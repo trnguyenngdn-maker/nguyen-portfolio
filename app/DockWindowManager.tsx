@@ -763,6 +763,173 @@ function ProductOSChat() {
   );
 }
 
+type ValueTopic = { id: string; title: string; para: string };
+
+const valueTopics: ValueTopic[] = [
+  {
+    id: "fair",
+    title:
+      "I do not expect life to be fair, but I do expect myself to rise from mistakes",
+    para: `I've learned not to spend too much energy waiting for perfect conditions. Moving countries, changing paths, building products, interviewing, failing, restarting. None of it has ever felt perfectly fair or perfectly timed. But I do believe in my ability to learn from mistakes, recover with more clarity, and come back sharper. For me, resilience is not about pretending things are easy. It's about refusing to let one failure become my final definition.`,
+  },
+  {
+    id: "motion",
+    title: "An idiot in motion is greater than an immobile genius",
+    para: `I have a strong bias for action. I would rather build a rough prototype, talk to users, test an ugly first version, or send the first message than wait forever for the perfect plan. Some of my best learnings came from moving before I felt fully ready. Thinking matters, of course, but in product, motion creates feedback, and feedback creates better judgment.`,
+  },
+  {
+    id: "luck",
+    title: "I can create luck",
+    para: `I don't see luck as something purely random. A lot of luck comes from increasing the surface area for opportunities: meeting people, sharing work, asking questions, building side projects, applying even when it feels ambitious, and putting ideas into the world. I can't control every outcome, but I can control how often I show up, how prepared I am, and how many doors I give life the chance to open.`,
+  },
+  {
+    id: "giveback",
+    title: "Always give back to your community",
+    para: `I wouldn't be where I am without people who shared advice, opened doors, reviewed my work, or simply believed I could do more. That makes me feel responsible to do the same for others. Whether it's helping someone prepare for an interview, sharing what I've learned as a first-generation student, or supporting people from underrepresented backgrounds, I think success feels more meaningful when it circulates.`,
+  },
+  {
+    id: "uncomfortable",
+    title: "I grow when I feel uncomfortable",
+    para: `Most important growth moments in my life started with discomfort: arriving in France without speaking the language fluently, stepping into product from a technical background, pitching a startup, working with senior stakeholders, or building something from zero. I've learned to see discomfort as a signal that I'm entering a new level. Not every uncomfortable situation is good, but many of them have taught me who I can become when I don't run away too early.`,
+  },
+];
+
+function ClaudeReplyBar() {
+  return (
+    <div className="claude-reply">
+      <div className="claude-reply-bar">
+        <span className="claude-plus" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </span>
+        <span className="claude-reply-placeholder">Reply to NI…</span>
+        <span className="claude-reply-send" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 19V5M6 11l6-6 6 6" />
+          </svg>
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function ValueChat({ value }: { value: ValueTopic }) {
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setRevealed(true), 850);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <main className="claude-main claude-main-chat">
+      <div className="claude-thread">
+        {revealed ? (
+          <div className="claude-msg claude-msg-ni claude-anim">
+            <NiSpark />
+            <div className="claude-msg-body">
+              <p className="claude-os-heading">{value.title}</p>
+              <p>{value.para}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="claude-msg claude-msg-ni claude-anim">
+            <NiSpark />
+            <div className="claude-thinking" aria-label="Thinking">
+              <span />
+              <span />
+              <span />
+            </div>
+          </div>
+        )}
+      </div>
+      <ClaudeReplyBar />
+    </main>
+  );
+}
+
+function ChatItemIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinejoin="round">
+      <path d="M4 5h16v11H9l-5 4z" />
+    </svg>
+  );
+}
+
+function AssistantWindow({
+  title,
+  onClose,
+}: {
+  title: string;
+  onClose: () => void;
+}) {
+  const [selected, setSelected] = useState("product-os");
+  const activeValue = valueTopics.find((value) => value.id === selected);
+
+  return (
+    <div className="claude-window">
+      <aside className="claude-sidebar">
+        <div className="claude-sidebar-head">
+          <WindowControls title={title} onClose={onClose} />
+          <div className="claude-sidebar-tools" aria-hidden="true">
+            <span className="claude-tool">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                <rect x="3" y="4" width="18" height="16" rx="2.5" />
+                <line x1="9" y1="4" x2="9" y2="20" />
+              </svg>
+            </span>
+            <span className="claude-tool">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" />
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <p className="claude-section-label">Pinned</p>
+        <div className="claude-pinned">
+          <button
+            type="button"
+            className={`claude-chat-item ${
+              selected === "product-os" ? "is-active" : ""
+            }`}
+            onClick={() => setSelected("product-os")}
+          >
+            <ChatItemIcon />
+            My thoughts on product management
+          </button>
+        </div>
+
+        <p className="claude-section-label">What I believe</p>
+        <div className="claude-pinned">
+          {valueTopics.map((value) => (
+            <button
+              type="button"
+              key={value.id}
+              className={`claude-chat-item ${
+                selected === value.id ? "is-active" : ""
+              }`}
+              onClick={() => setSelected(value.id)}
+            >
+              <ChatItemIcon />
+              {value.title}
+            </button>
+          ))}
+        </div>
+      </aside>
+
+      {activeValue ? (
+        <ValueChat key={activeValue.id} value={activeValue} />
+      ) : (
+        <ProductOSChat />
+      )}
+    </div>
+  );
+}
+
 function InterestSidebarIcon({ icon }: { icon: InterestIcon }) {
   if (icon === "restaurant") {
     return (
@@ -1521,48 +1688,10 @@ export default function DockWindowManager() {
               </div>
             </div>
           ) : window.id === "assistant" ? (
-            <div className="claude-window">
-              <aside className="claude-sidebar">
-                <div className="claude-sidebar-head">
-                  <WindowControls
-                    title={window.title}
-                    onClose={() => closeWindow(window.id)}
-                  />
-                  <div className="claude-sidebar-tools" aria-hidden="true">
-                    <span className="claude-tool">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
-                        <rect x="3" y="4" width="18" height="16" rx="2.5" />
-                        <line x1="9" y1="4" x2="9" y2="20" />
-                      </svg>
-                    </span>
-                    <span className="claude-tool">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round">
-                        <circle cx="11" cy="11" r="7" />
-                        <line x1="16.5" y1="16.5" x2="21" y2="21" />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-
-                <p className="claude-section-label">Pinned</p>
-                <div className="claude-pinned">
-                  <button type="button" className="claude-chat-item is-active">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinejoin="round">
-                      <path d="M4 5h16v11H9l-5 4z" />
-                    </svg>
-                    My thoughts on product management
-                  </button>
-                  <button type="button" className="claude-chat-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinejoin="round">
-                      <path d="M4 5h16v11H9l-5 4z" />
-                    </svg>
-                    My other thoughts
-                  </button>
-                </div>
-              </aside>
-
-              <ProductOSChat />
-            </div>
+            <AssistantWindow
+              title={window.title}
+              onClose={() => closeWindow(window.id)}
+            />
           ) : (
             <header className="mac-window-toolbar">
               <WindowControls

@@ -564,7 +564,14 @@ body.has-view-work-cursor .mac-dock-item::before {
   padding: 0 10px 12px;
   background: #f1efe7;
   border-right: 1px solid rgb(0 0 0 / 7%);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(0 0 0 / 20%) transparent;
+}
+
+.claude-section-label:not(:first-of-type) {
+  margin-top: 14px;
 }
 
 .claude-sidebar-head {
