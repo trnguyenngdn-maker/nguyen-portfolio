@@ -150,7 +150,7 @@ const noteGroups = [
       {
         title: "CV in French",
         folder: "Resume",
-        pdfHref: "/resumes/nguyen-resume-french-v2.pdf",
+        pdfHref: "/resumes/nguyen-resume-french-v3.pdf",
         download: "Nguyen_Resume_French.pdf",
       },
     ] satisfies NoteItem[],
