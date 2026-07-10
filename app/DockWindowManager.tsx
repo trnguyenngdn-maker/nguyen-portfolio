@@ -142,15 +142,15 @@ const noteGroups = [
         ],
       },
       {
-        title: "CV in English",
+        title: "Resume in English",
         folder: "Resume",
         pdfHref: "/resumes/nguyen-resume-english-v2.pdf",
         download: "Nguyen_Resume_English.pdf",
       },
       {
-        title: "CV in French",
+        title: "Resume in French",
         folder: "Resume",
-        pdfHref: "/resumes/nguyen-resume-french-v3.pdf",
+        pdfHref: "/resumes/nguyen-resume-french-v4.pdf",
         download: "Nguyen_Resume_French.pdf",
       },
     ] satisfies NoteItem[],
@@ -505,6 +505,263 @@ const recommendations: Recommendation[] = [
     height: 1818,
   },
 ];
+
+type ProductOSTopic = {
+  title: string;
+  question: string;
+  paras: string[];
+};
+
+const productOS: ProductOSTopic[] = [
+  {
+    title: "I start with the real problem, not just the request",
+    question: "How do you decide what's truly worth solving?",
+    paras: [
+      `When someone brings a requirement, I try not to jump directly into solution mode. A request is often only the surface of something deeper: a user frustration, a business constraint, an internal process issue, or a technical limitation that has been ignored for too long.`,
+      `I learned this especially while working on legacy authentication products at Docusign. On the surface, the problem looked like support tickets and outdated user flows. But underneath, it was also about technical debt, slow feature development, client frustration, and the difficulty of evolving a product used by millions of customers. That experience taught me that before building the thing right, I need to understand whether we are solving the right problem.`,
+    ],
+  },
+  {
+    title: "I look for the opportunity behind the problem",
+    question: "Where do your best product ideas come from?",
+    paras: [
+      `I'm naturally curious about gaps: gaps in the market, gaps in user experience, gaps between what people need and what existing products actually offer. That's probably the entrepreneurial part of me.`,
+      `I saw this while building Fepha, my Vietnamese specialty coffee brand. At first, it looked like a simple consumer product idea. But the more I explored the market, the more I saw a bigger opportunity: Vietnamese coffee was often known in Europe through nostalgic or mass-market clichés, while its specialty side was still underrepresented. That pushed me to think not only about the product, but also about positioning, storytelling, sourcing, packaging, logistics, and go-to-market. A good opportunity is rarely just one feature or one product. It is a full system to build around.`,
+    ],
+  },
+  {
+    title: "I use research to make things less blurry",
+    question: "How do you make decisions under ambiguity?",
+    paras: [
+      `I don't see research as a formal step that happens before "real product work." For me, research is how I make unclear problems easier to work with. When there is ambiguity, my first reflex is to separate facts from assumptions: what do we actually know, what are we guessing, and which assumption could hurt us the most if we are wrong?`,
+      `At L'Oréal, interviewing customers across France, the UK, and the US taught me how differently people can interpret the same topic, like data privacy or e-commerce content, depending on culture, context, and expectations. At AXA, working with 30+ entities taught me that research is not only about external users. Internal teams also have needs, constraints, habits, and blind spots. In both cases, research helped turn messy signals into clearer product decisions.`,
+      `But I also learned that research does not remove ambiguity completely, and that's okay. At some point, you need to make a decision with the best evidence available. That's why I try to define what success would look like upfront: the behavior we want to change, the metric we want to move, or the learning we want to get. Then I revisit the decision after launch or adoption, using real feedback to decide whether we should double down, adjust, or rethink the approach.`,
+    ],
+  },
+  {
+    title: "I prototype fast because ideas need to be tested",
+    question: "How do you de-risk an idea before building?",
+    paras: [
+      `I like making ideas tangible quickly. A rough prototype is often more useful than a perfect document, because people can react to it. Users can tell you what feels wrong. Designers can challenge the flow. Engineers can spot complexity. Stakeholders can finally see what you mean.`,
+      `Building Scrollar and GhostCatch made this very real for me. When you don't have a large team, you can't hide behind process forever. You need to build, test, learn, and adjust. AI-assisted tools like Claude Code, Google Stitch, and Figma Make helped me move faster, but the real lesson was not "AI makes things quick." The lesson was that the faster I can make an idea testable, the faster I can find out whether it deserves more investment.`,
+    ],
+  },
+  {
+    title: "I handle competing priorities by making trade-offs visible",
+    question: "How do you handle competing priorities?",
+    paras: [
+      `A big part of product management is helping teams decide what matters most when everything feels important. I try not to treat prioritization as a political debate or a loudest-voice-wins exercise. Instead, I like making the decision more structured: what is the expected user value, business impact, urgency, confidence level, and effort?`,
+      `Depending on the context, I use frameworks like RICE to compare opportunities more objectively, but I don't treat the score as the decision itself. The score is a conversation tool. It helps surface assumptions, compare impact versus effort, and make trade-offs easier to discuss. Then I bring in inputs from engineering, design, compliance, support, GTM, or clients to understand technical complexity, regulatory constraints, operational risk, and customer impact.`,
+      `Docusign taught me how important this is in a regulated product environment. A better authentication experience is not just a UX improvement; it also involves security, compliance, engineering feasibility, vendor constraints, support burden, and market coverage. AXA taught me the same thing at organizational scale: when many local entities rely on the same design system, prioritization is not only about building the best component, but about choosing what creates the most reusable value across teams.`,
+      `Over time, I've learned that good prioritization is not about making everyone fully happy. It's about helping everyone understand why a decision makes sense, what trade-offs we are accepting, and what we will revisit later if the context changes.`,
+    ],
+  },
+  {
+    title: "I ship, measure, and keep learning",
+    question: "How do you know if a product actually worked?",
+    paras: [
+      `I care about shipping. A product only becomes real when people use it, react to it, struggle with it, or benefit from it. But I don't see launch as the finish line. It's more like the start of the next learning loop.`,
+      `Some of my most valuable product lessons came from measuring what happened after the work was shipped or adopted: reducing authentication time, lowering vendor costs, increasing design system usage, identifying UX improvement opportunities, or seeing real users interact with my own apps. These outcomes remind me that the goal is not to ship more things. The goal is to create a change that users, teams, or the business can actually feel.`,
+    ],
+  },
+];
+
+type OSMessageKind =
+  | { kind: "intro" }
+  | { kind: "menu" }
+  | { kind: "user"; topic: number }
+  | { kind: "answer"; topic: number }
+  | { kind: "thinking" };
+
+type OSMessage = OSMessageKind & { id: number };
+
+function NiSpark() {
+  return (
+    <span className="claude-msg-spark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1c.4 3.6 1.2 5.8 2.5 7.1S17.4 10.6 21 11c-3.6.4-5.8 1.2-7.1 2.5S12.4 17.4 12 21c-.4-3.6-1.2-5.8-2.5-7.1S6.6 11.4 3 11c3.6-.4 5.8-1.2 7.1-2.5S11.6 4.6 12 1Z" />
+      </svg>
+    </span>
+  );
+}
+
+function ProductOSChat() {
+  const [messages, setMessages] = useState<OSMessage[]>([]);
+  const threadRef = useRef<HTMLDivElement>(null);
+  const busyRef = useRef(false);
+  const idRef = useRef(0);
+  const startedRef = useRef(false);
+
+  const addThinking = () =>
+    setMessages((prev) => [
+      ...prev,
+      { id: (idRef.current += 1), kind: "thinking" },
+    ]);
+  const reveal = (msg: OSMessageKind) =>
+    setMessages((prev) => [
+      ...prev.filter((m) => m.kind !== "thinking"),
+      { ...msg, id: (idRef.current += 1) } as OSMessage,
+    ]);
+
+  useEffect(() => {
+    if (startedRef.current) {
+      return;
+    }
+    startedRef.current = true;
+    addThinking();
+    setTimeout(() => {
+      reveal({ kind: "intro" });
+      setTimeout(() => {
+        addThinking();
+        setTimeout(() => reveal({ kind: "menu" }), 750);
+      }, 450);
+    }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const el = threadRef.current;
+    if (el) {
+      el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    }
+  }, [messages]);
+
+  const pick = (topic: number) => {
+    if (busyRef.current) {
+      return;
+    }
+    busyRef.current = true;
+    setMessages((prev) => {
+      const base =
+        prev[prev.length - 1]?.kind === "menu" ? prev.slice(0, -1) : prev;
+      return [
+        ...base,
+        { id: (idRef.current += 1), kind: "user", topic },
+        { id: (idRef.current += 1), kind: "thinking" },
+      ];
+    });
+    setTimeout(() => {
+      reveal({ kind: "answer", topic });
+      setTimeout(() => {
+        addThinking();
+        setTimeout(() => {
+          reveal({ kind: "menu" });
+          busyRef.current = false;
+        }, 800);
+      }, 450);
+    }, 1150);
+  };
+
+  return (
+    <main className="claude-main claude-main-chat">
+      <div className="claude-thread" ref={threadRef}>
+        {messages.map((msg) => {
+          if (msg.kind === "thinking") {
+            return (
+              <div className="claude-msg claude-msg-ni claude-anim" key={msg.id}>
+                <NiSpark />
+                <div className="claude-thinking" aria-label="Thinking">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              </div>
+            );
+          }
+          if (msg.kind === "intro") {
+            return (
+              <div className="claude-msg claude-msg-ni claude-anim" key={msg.id}>
+                <NiSpark />
+                <div className="claude-msg-body">
+                  <p className="claude-os-heading">
+                    My Product Operating System
+                  </p>
+                  <p>
+                    I like building products from messy starting points.
+                    Sometimes it&apos;s a vague user pain, sometimes it&apos;s a
+                    stakeholder request, sometimes it&apos;s a market opportunity
+                    that feels obvious but hasn&apos;t been properly explored yet.
+                  </p>
+                  <p>
+                    Over time, working across B2B SaaS, UX research, design
+                    systems, identity verification, consumer apps, and even
+                    e-commerce, I&apos;ve learned that product management is
+                    rarely about having the smartest idea in the room. It&apos;s
+                    more often about creating clarity, making trade-offs visible,
+                    bringing people with different perspectives together, and
+                    moving forward before everything feels perfectly certain.
+                  </p>
+                </div>
+              </div>
+            );
+          }
+          if (msg.kind === "menu") {
+            return (
+              <div className="claude-msg claude-msg-ni claude-anim" key={msg.id}>
+                <NiSpark />
+                <div className="claude-msg-body">
+                  <p className="claude-os-menu-q">
+                    What do you want to know more about how I operate?
+                  </p>
+                  <div className="claude-os-options">
+                    {productOS.map((topic, topicIndex) => (
+                      <button
+                        type="button"
+                        key={topic.title}
+                        className="claude-os-option"
+                        onClick={() => pick(topicIndex)}
+                      >
+                        {topic.question}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          }
+          if (msg.kind === "user") {
+            return (
+              <div
+                className="claude-msg claude-msg-user claude-anim"
+                key={msg.id}
+              >
+                <p>{productOS[msg.topic].question}</p>
+              </div>
+            );
+          }
+          return (
+            <div className="claude-msg claude-msg-ni claude-anim" key={msg.id}>
+              <NiSpark />
+              <div className="claude-msg-body">
+                <p className="claude-os-heading">{productOS[msg.topic].title}</p>
+                {productOS[msg.topic].paras.map((para, paraIndex) => (
+                  <p key={paraIndex}>{para}</p>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="claude-reply">
+        <div className="claude-reply-bar">
+          <span className="claude-plus" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </span>
+          <span className="claude-reply-placeholder">Reply to NI…</span>
+          <span className="claude-reply-send" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 19V5M6 11l6-6 6 6" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </main>
+  );
+}
 
 function InterestSidebarIcon({ icon }: { icon: InterestIcon }) {
   if (icon === "restaurant") {
@@ -1102,20 +1359,67 @@ export default function DockWindowManager() {
                   className="photos-sidebar-toggle"
                   aria-label="Show sidebar"
                 >
-                  <span aria-hidden="true" />
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+                    <rect x="3" y="5" width="18" height="14" rx="2.5" />
+                    <line x1="9" y1="5" x2="9" y2="19" />
+                  </svg>
                 </button>
                 <div className="photos-toolbar-title">
                   <strong>My interests</strong>
                   <span>23 Jun 2026</span>
                 </div>
                 <div className="photos-toolbar-actions" aria-hidden="true">
-                  <span className="photos-filter-icon" />
-                  <span className="photos-list-icon" />
-                  <span className="photos-more-icon" />
-                  <span className="photos-info-icon" />
-                  <span className="photos-share-icon" />
-                  <span className="photos-heart-icon" />
-                  <span className="photos-search-icon" />
+                  <div className="photos-tb-group">
+                    <span className="photos-tb-btn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+                        <rect x="4" y="4" width="7" height="7" rx="1.5" />
+                        <rect x="13" y="4" width="7" height="7" rx="1.5" />
+                        <rect x="4" y="13" width="7" height="7" rx="1.5" />
+                        <rect x="13" y="13" width="7" height="7" rx="1.5" />
+                      </svg>
+                    </span>
+                    <span className="photos-tb-btn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round">
+                        <line x1="4" y1="7" x2="20" y2="7" />
+                        <line x1="4" y1="12" x2="15" y2="12" />
+                        <line x1="4" y1="17" x2="10" y2="17" />
+                      </svg>
+                    </span>
+                    <span className="photos-tb-btn">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="6" cy="12" r="1.6" />
+                        <circle cx="12" cy="12" r="1.6" />
+                        <circle cx="18" cy="12" r="1.6" />
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="photos-tb-group">
+                    <span className="photos-tb-btn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="9" />
+                        <line x1="12" y1="11" x2="12" y2="16.5" />
+                        <line x1="12" y1="7.6" x2="12" y2="7.7" />
+                      </svg>
+                    </span>
+                    <span className="photos-tb-btn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 15V4" />
+                        <path d="m8 7 4-3 4 3" />
+                        <path d="M6 12v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" />
+                      </svg>
+                    </span>
+                    <span className="photos-tb-btn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 20s-6.5-4.2-9-8a4.4 4.4 0 0 1 9-4 4.4 4.4 0 0 1 9 4c-2.5 3.8-9 8-9 8Z" />
+                      </svg>
+                    </span>
+                  </div>
+                  <span className="photos-tb-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round">
+                      <circle cx="11" cy="11" r="7" />
+                      <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                    </svg>
+                  </span>
                 </div>
               </header>
               <div className="photos-window-content">
@@ -1246,7 +1550,7 @@ export default function DockWindowManager() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinejoin="round">
                       <path d="M4 5h16v11H9l-5 4z" />
                     </svg>
-                    How my brain works
+                    My thoughts on product management
                   </button>
                   <button type="button" className="claude-chat-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinejoin="round">
@@ -1257,93 +1561,7 @@ export default function DockWindowManager() {
                 </div>
               </aside>
 
-              <main className="claude-main claude-main-chat">
-                <div className="claude-thread">
-                  <div className="claude-msg claude-msg-user">
-                    <p>So… how does your brain actually work, Nguyen?</p>
-                  </div>
-
-                  <div className="claude-msg claude-msg-ni">
-                    <span className="claude-msg-spark" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 1c.4 3.6 1.2 5.8 2.5 7.1S17.4 10.6 21 11c-3.6.4-5.8 1.2-7.1 2.5S12.4 17.4 12 21c-.4-3.6-1.2-5.8-2.5-7.1S6.6 11.4 3 11c3.6-.4 5.8-1.2 7.1-2.5S11.6 4.6 12 1Z" />
-                      </svg>
-                    </span>
-                    <div className="claude-msg-body">
-                      <p>Honestly? Like a product manager who can&apos;t switch off.</p>
-                      <p>
-                        Three questions run quietly in the background almost all the
-                        time:
-                      </p>
-                      <ol>
-                        <li>
-                          <strong>Who is this for?</strong> I map every problem back
-                          to a real person and what they&apos;re actually trying to
-                          get done.
-                        </li>
-                        <li>
-                          <strong>
-                            What&apos;s the smallest thing worth shipping?
-                          </strong>{" "}
-                          I&apos;d rather learn from something real in a week than
-                          plan something perfect for a quarter.
-                        </li>
-                        <li>
-                          <strong>How does this connect to everything else?</strong>{" "}
-                          I collect patterns across cybersecurity, coffee, design,
-                          and consumer apps — and the best ideas usually come from
-                          colliding two of them.
-                        </li>
-                      </ol>
-                      <p>
-                        So it&apos;s less &ldquo;genius alone in a room&rdquo; and
-                        more &ldquo;curious kid with a whiteboard, a wall of sticky
-                        notes, and far too many browser tabs.&rdquo;
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="claude-msg claude-msg-user">
-                    <p>And when you get stuck?</p>
-                  </div>
-
-                  <div className="claude-msg claude-msg-ni">
-                    <span className="claude-msg-spark" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 1c.4 3.6 1.2 5.8 2.5 7.1S17.4 10.6 21 11c-3.6.4-5.8 1.2-7.1 2.5S12.4 17.4 12 21c-.4-3.6-1.2-5.8-2.5-7.1S6.6 11.4 3 11c3.6-.4 5.8-1.2 7.1-2.5S11.6 4.6 12 1Z" />
-                      </svg>
-                    </span>
-                    <div className="claude-msg-body">
-                      <p>
-                        I stop staring at the screen. I go talk to a user, take a
-                        walk, or ship something small and a little ugly just to see
-                        what breaks.
-                      </p>
-                      <p>
-                        Momentum beats perfection — clarity almost always shows up
-                        once something real is in front of me.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="claude-reply">
-                  <div className="claude-reply-bar">
-                    <span className="claude-plus" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round">
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                      </svg>
-                    </span>
-                    <span className="claude-reply-placeholder">Reply to NI…</span>
-                    <span className="claude-reply-send" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 19V5M6 11l6-6 6 6" />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-              </main>
+              <ProductOSChat />
             </div>
           ) : (
             <header className="mac-window-toolbar">
