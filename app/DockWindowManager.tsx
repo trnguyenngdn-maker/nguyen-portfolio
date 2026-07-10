@@ -763,12 +763,14 @@ function ProductOSChat() {
   );
 }
 
-type ValueTopic = { id: string; title: string; para: string };
+type ValueTopic = { id: string; tab?: string; title: string; para: string };
 
 const valueTopics: ValueTopic[] = [
   {
     id: "fair",
-    title: "I do not expect life to be fair",
+    tab: "I do not expect life to be fair",
+    title:
+      "I do not expect life to be fair, but I do expect myself to rise from mistakes",
     para: `I've learned not to spend too much energy waiting for perfect conditions. Moving countries, changing paths, building products, interviewing, failing, restarting. None of it has ever felt perfectly fair or perfectly timed. But I do believe in my ability to learn from mistakes, recover with more clarity, and come back sharper. For me, resilience is not about pretending things are easy. It's about refusing to let one failure become my final definition.`,
   },
   {
@@ -914,7 +916,7 @@ function AssistantWindow({
               onClick={() => setSelected(value.id)}
             >
               <ChatItemIcon />
-              {value.title}
+              {value.tab ?? value.title}
             </button>
           ))}
         </div>
