@@ -46,8 +46,13 @@ export default function TrackingAvatar() {
       state.x += state.vx;
       state.y += state.vy;
 
+      // Magnetic pop: scale up slightly while the avatar is springing around
+      const speed = Math.sqrt(state.vx * state.vx + state.vy * state.vy);
+      const scale = 1 + Math.min(speed * 0.01, 0.06);
+
       avatarElement.style.setProperty("--repulsion-x", `${state.x}px`);
       avatarElement.style.setProperty("--repulsion-y", `${state.y}px`);
+      avatarElement.style.setProperty("--repulsion-scale", `${scale}`);
 
       animationRef.current = requestAnimationFrame(animateRepulsion);
     }
@@ -80,7 +85,7 @@ export default function TrackingAvatar() {
       // Repulsion effect when cursor is close
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       const repulsionRadius = rect.width * 0.6;
-      const repulsionStrength = 25;
+      const repulsionStrength = 42;
 
       if (distance < repulsionRadius && distance > 0) {
         const force = (1 - distance / repulsionRadius) * repulsionStrength;

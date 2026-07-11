@@ -159,6 +159,7 @@ function FolderShortcut({
         className="mac-desktop-icon flex w-full flex-col items-center gap-2 text-center"
         data-folder-window={id}
         data-folder-title={`${title} ${subtitle}`}
+        data-folder-shorttitle={title}
         data-folder-icon={iconSrc}
         data-folder-role={role}
         style={{ "--pop-delay": `${introDelay}ms` } as CSSProperties}

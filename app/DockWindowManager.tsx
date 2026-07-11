@@ -17,6 +17,7 @@ type OpenWindow = {
   kind: "app" | "folder";
   appId?: WindowApp;
   title: string;
+  shortTitle?: string;
   iconSrc?: string;
   role?: string;
   zIndex: number;
@@ -420,22 +421,192 @@ const skillGroups: SkillGroup[] = [
 
 const folderSections = [
   [
-    "About",
+    "What did you work on?",
     "Project overview will live here. This area is intentionally ready for the story behind the work.",
   ],
   [
-    "Challenge",
+    "What made it hard?",
     "Problem framing, constraints, and the context that made this project worth building.",
   ],
   [
-    "My Role",
+    "What did you do?",
     "Responsibilities, decisions, process, and the parts of the project I directly owned.",
   ],
   [
-    "Impact",
+    "How did you get there?",
+    "How the work actually unfolded: the research, the iterations, the trade-offs, and the moments that shaped the final direction.",
+  ],
+  [
+    "What changed?",
     "Outcomes, signals, lessons, and measurable results will be added here.",
   ],
 ];
+
+// One-line intro shown at the top of a project window, keyed by folder id.
+const folderIntros: Record<string, string> = {
+  "fepha-founder-2026":
+    "Fepha is my attempt to turn an overlooked coffee culture into a modern European consumer brand, where I intentionally applied product management principles to a physical product world.",
+  "ghostcatch-founder-2026":
+    "GhostCatch is a subscription manager I built to help people find, track, and act on the recurring payments they often forget about.",
+  "scrollar-founder-2026":
+    "Scrollar is a screen time manager I built to help people keep promises to themselves with stronger controls, smarter onboarding, and a more engaging experience.",
+  "docusign-pm-2025":
+    "I managed identity verification products at Docusign, where every product decision had to balance trust, security, user experience, regulation, and scale.",
+};
+
+// Per-project section titles and content, keyed by folder id.
+const projectFolderSections: Record<string, string[][]> = {
+  "fepha-founder-2026": [
+    [
+      "What is this beautiful thing you made?",
+      `Fepha is a Vietnamese specialty coffee brand I co-founded to reimagine Vietnamese coffee for the European market.
+
+Vietnam is the second-largest coffee producer in the world, yet its name is still strangely invisible in the specialty coffee scene. We want to change that by building a brand that feels premium, playful, modern, and proudly rooted in Vietnamese coffee culture.`,
+    ],
+    [
+      "Why build it?",
+      `The opportunity came from a gap we couldn't unsee. Vietnamese coffee has history, taste, rituals, and cultural richness, but in Europe it is still often associated with cheap robusta, supermarket blends, or traditional restaurant drinks.
+
+At the same time, Gen Z consumers are increasingly curious about Asian beverages, new rituals, and culturally rich products, from matcha to boba to Vietnamese coffee content on TikTok and Instagram. We saw space for a brand that speaks their language: visual, engaging, accessible, and not afraid to make Vietnamese coffee feel fresh.`,
+    ],
+    [
+      "What did you pour in?",
+      `I treated Fepha like a 0-to-1 product, but in a world where iteration is much harder than software. In digital products, you can tweak a flow, change a button, or ship a new version quickly. In the physical world, every decision has weight: packaging has minimum order quantities, suppliers have lead times, logistics can break, and one wrong production choice can become expensive fast.
+
+That forced me to apply my PM toolkit even more intentionally: customer discovery, positioning, design, prototyping, supplier negotiation, cost estimation, launch planning, and fast iteration. I also used quick prototypes to align with my co-founder on the brand vision, because sometimes a rough mockup is the fastest way to turn abstract ideas into shared decisions.`,
+    ],
+    [
+      "How did it come together?",
+      `We built Fepha by reducing uncertainty step by step. First, define the customer. Then, clarify the positioning. Then, find the right suppliers, packaging partners, roasters, and logistics setup. Every step was about asking: what is the smallest version we can launch with, without compromising the story or the product experience?
+
+The upcoming crowdfunding campaign is part of that same logic. It is not only a funding tool, it is our first real market test. We want to use it to create momentum, validate demand, understand which products resonate most, and avoid scaling blindly before the market gives us a signal.`,
+    ],
+    [
+      "What did it stir?",
+      `Fepha taught me that product thinking is not limited to apps or SaaS. The same instincts apply: understand the user, identify the opportunity, prototype fast, align people, manage trade-offs, launch, measure, and iterate.
+
+But physical products made those lessons feel sharper. You cannot pretend operations are separate from product. Brand, packaging, sourcing, roasting, logistics, cost, and go-to-market all shape the customer experience. Fepha is personal because it comes from my culture, but it is also one of my clearest examples of high-agency product building: turning a market gap into something real enough to launch.`,
+    ],
+  ],
+  "ghostcatch-founder-2026": [
+    [
+      "What is this beautiful thing you made?",
+      `GhostCatch is a mobile app I independently designed, built, launched, and grew to help people manage their subscriptions without connecting their bank account.
+
+The idea is simple: people often lose visibility on what they're still paying for. Free trials turn into monthly charges, annual plans renew silently, and small subscriptions add up over time. GhostCatch helps users create a clean subscription library, scan bills with AI, and get gentle reminders before renewals.`,
+    ],
+    [
+      "How did you spot the gap?",
+      `I wasn't trying to invent a completely new category. Subscription tracking is already a proven need, and the waste behind it is real. A 2025 CNET survey found that Americans spend nearly $1,100 per year on subscriptions, with about $200 going to services they rarely or never use.
+
+So I studied competitors, App Store reviews, TikTok comments, and user complaints. A clear split started to show: some apps automatically detect subscriptions by connecting to your bank account, which is powerful but uncomfortable for privacy-conscious users. Others avoid bank access, but force people to manually enter every subscription one by one.
+
+GhostCatch sits in the middle: users stay in control, but they can also scan a bill, receipt, or confirmation email and let the app detect the subscription details for them.`,
+    ],
+    [
+      "How does it work?",
+      `I built GhostCatch around three simple flows: add, detect, and remind.
+
+Users can manually add a subscription when they already know what they're paying for, or use the scan feature to capture a bill, receipt, or subscription confirmation. The app extracts the key details automatically: service name, price, billing cycle, and renewal date.
+
+Once saved, each subscription becomes part of a clean library where users can see what they pay for, how often they pay, and what is coming up next. Before a renewal, GhostCatch sends a gentle reminder so users can decide whether to keep, cancel, or review it.`,
+    ],
+    [
+      "How did it come together?",
+      `GhostCatch started as a way for me to keep up with emerging AI-assisted product workflows while forcing myself to actually ship something. Not a prototype, not a portfolio concept: a real app, available on Android, used by real people.
+
+I used competitor research to find the gap, quick prototyping to shape the experience, and AI-assisted workflows to move faster from idea to production. The build was intentionally lean: ship the smallest useful version, watch how users respond, improve the flows, and keep the product simple enough to understand immediately.`,
+    ],
+    [
+      "What did it give back?",
+      `Within six weeks of launch, GhostCatch grew to 2,000 users and started generating passive income. More importantly, it proved something to me as a product builder: I could independently spot a market gap, build a usable product, launch it, and get real people to use it.
+
+It also changed how I think about AI-assisted workflows. The value was not that "AI built the app for me." The value was that AI reduced the distance between idea, prototype, and release. GhostCatch became one of my clearest examples of high-agency product work: find a painful everyday problem, add a better experience layer, ship fast, and learn from the market.`,
+    ],
+  ],
+  "scrollar-founder-2026": [
+    [
+      "What is this beautiful thing you made?",
+      `Scrollar is a mobile app I independently built to help people reduce unhealthy phone usage and turn screen time management into something more engaging than a cold settings page.
+
+The product uses screen time control APIs to help users set limits, block distracting apps, and track the time they save. But the emotional layer is just as important: users are guided by Hammy, a retro pixel-style pig mascot that grows as they save screen time and unlocks playful skins inspired by childhood characters and internet culture.`,
+    ],
+    [
+      "What problem were you solving?",
+      `The starting point was simple: more and more people know they spend too much time on their phones, but knowing the problem does not automatically change the behavior. On Reddit, TikTok, and other social platforms, people openly talk about phone addiction, doomscrolling, and the feeling of breaking the same promise to themselves again and again.
+
+Apple already has Screen Time, but the conversations around it revealed two major pain points: it is too easy to bypass, and it does not give users enough flexibility. Many people don't just need a limit. They need a system that feels personal, harder to ignore, and motivating enough to survive past the first few days.`,
+    ],
+    [
+      "What did you build differently?",
+      `I designed Scrollar around three ideas: granular control, stronger blocking, and emotional engagement.
+
+Users can define more specific screen time rules instead of relying on one generic blocking mode. The app is designed to make bypassing limits harder, so the user's future self is better protected from their impulsive self. And instead of making the experience feel punitive, Scrollar gives users a small companion: Hammy grows as they reclaim time, turning progress into something visible and a little bit fun.
+
+The idea was inspired by products like Duolingo. The innovation is not always inventing a completely new category. Sometimes, it is taking a proven engagement mechanic from one domain and applying it to a behavior that badly needs a better experience.`,
+    ],
+    [
+      "How did it come together?",
+      `The hardest part was not only building the app. It was earning the right to build it properly. Screen time data is sensitive, and access to these APIs requires going through strict platform approval and privacy requirements. That forced me to think carefully about trust, user consent, data minimization, and how to explain the product clearly.
+
+Once the foundation was unlocked, I used AI-assisted workflows with tools like Claude Code, Google Stitch, and Figma Make to move quickly from idea to prototype to launch. I designed the onboarding very intentionally: not just asking users what they want to block, but helping them reflect on how screen time affects their life and showing them early what they could gain by changing the habit.`,
+    ],
+    [
+      "What did it give back?",
+      `Within six weeks of launch, Scrollar grew to 1,500 users. More importantly, it taught me how much product management in consumer space is about behavior, not just features.
+
+A screen time app is not successful because it has a timer. It is successful if it helps someone make a better decision in a weak moment. Scrollar became a strong exercise in user-centric product thinking: understand the emotional pain, study why existing solutions fail, design around motivation and friction, navigate privacy constraints, ship fast, and learn from real users.`,
+    ],
+  ],
+  "docusign-pm-2025": [
+    [
+      "What was I managing?",
+      `I worked on Identify, the product portfolio that verifies whether someone is really who they claim to be before they can access or sign a Docusign document.
+
+A simple example: when you open a Docusign envelope and need to enter a phone number, receive an OTP, and confirm your identity. That is identity verification. It is one of Docusign's biggest add-ons, used by customers around the world to protect sensitive agreements.
+
+I managed products including Phone Authentication, eID, and Identity Wallet, with Phone Authentication being the most-used product in the portfolio, processing 10M+ transactions per month.`,
+    ],
+    [
+      "What made the product space hard?",
+      `Identity verification is not a place where you can "move fast and break things." The product sits directly between trust, compliance, customer workflows, and the signing experience. If the experience is too slow, users drop. If it is too loose, security suffers. If a migration is handled poorly, customer systems can break.
+
+That made the role deeply cross-functional. I worked with Engineering, Design, Compliance, Legal, Strategic Partnerships, Support, and GTM teams across a complex international organization. A big part of the job was not just defining what to build, but making sure every team understood the trade-offs behind the decision.`,
+    ],
+    [
+      "How did I modernize without breaking trust?",
+      `A major part of my work focused on Phone Authentication, the most widely used identity product in the portfolio. The challenge was that Docusign had multiple Phone Auth experiences running on different technical stacks. One legacy version was still heavily used by customers, but its outdated UX and old tech stack created high maintenance costs and around 2,200 support tickets per year.
+
+The strategic direction was clear: migrate customers toward the newer Phone Authentication experience and eventually sunset the legacy product. But the execution was delicate. Customers had built Phone Auth deeply into their workflows, and the legacy product still had features they depended on. We could not simply deprecate it and hope for the best.
+
+So I helped define a multi-year sunset roadmap: understand what was blocking migration, identify which legacy capabilities needed to be rebuilt, and align stakeholders around a path that reduced risk while moving the product toward a more modern experience.`,
+    ],
+    [
+      "What was the first unlock?",
+      `One of the biggest blockers was a legacy feature that allowed trusted repeat users to skip authentication. For customers, this mattered because it reduced friction for people who had already proven their identity before. Without that feature, migrating to the new product would have meant a worse experience for some users.
+
+So the first step was to rebuild this capability in the modern Phone Authentication product. I defined the product requirements and worked with 2 engineers and 2 designers to shape the experience. The feature was projected to reduce authentication time by 36% for 2M monthly trusted repeat users.
+
+This was a good example of product judgment in a mature environment: sometimes the smartest feature is not the flashiest one. It is the one that removes a blocker, protects the customer experience, and unlocks a bigger strategic migration.`,
+    ],
+    [
+      "How did I approach eID?",
+      `On the eID side, the challenge was different. eID was more about market expansion, regulation, vendor strategy, and cost structure.
+
+As international regulations evolved, more markets needed faster, more secure, and locally compliant ways to verify identity. At the same time, some existing eID providers had become expensive, while newer vendors offered better pricing, coverage, and service.
+
+I worked on the integration of new eID suppliers into the Docusign platform, helping improve international coverage in markets where eID is critical, such as Germany and the Nordics. The initiative was projected to reduce yearly vendor costs by 65%, while strengthening Docusign's ability to serve regulated markets.`,
+    ],
+    [
+      "What did it teach me?",
+      `Docusign taught me how different product management feels at scale. In a startup, speed is often the biggest advantage. In a product like identity verification, precision matters just as much.
+
+I learned how to make product decisions in a space where user experience, security, compliance, technical debt, vendor strategy, and customer trust all collide. It sharpened the way I think about trade-offs: not just "what should we build?" but "what can we change safely, who will be affected, what could break, and how do we bring everyone with us?"
+
+That experience made me a stronger PM because it forced me to operate with both ambition and care. Move the product forward, yes, but never forget the trust sitting underneath it.`,
+    ],
+  ],
+};
 
 type Recommendation = {
   name: string;
@@ -771,7 +942,9 @@ const valueTopics: ValueTopic[] = [
     tab: "I do not expect life to be fair",
     title:
       "I do not expect life to be fair, but I do expect myself to rise from mistakes",
-    para: `I've learned not to spend too much energy waiting for perfect conditions. Moving countries, changing paths, building products, interviewing, failing, restarting. None of it has ever felt perfectly fair or perfectly timed. But I do believe in my ability to learn from mistakes, recover with more clarity, and come back sharper. For me, resilience is not about pretending things are easy. It's about refusing to let one failure become my final definition.`,
+    para: `Coming from an underrepresented background, I've had moments where life felt unfair in very real ways, where the lack of access, guidance, network, or familiarity with the system cost me opportunities. Sometimes, I made mistakes because I was still learning the rules of the game. And sometimes, honestly, it was just pure bad luck: the wrong timing, the wrong context, the wrong door closing before I even had a chance to prove myself. Moving countries, changing paths, building products, interviewing, failing, restarting. None of it has ever felt perfectly fair or perfectly timed.
+
+But I do believe in my ability to learn, recover, and come back sharper. For me, resilience is not about pretending things are easy or forcing every setback to have a beautiful meaning. It's about refusing to let one rejection, one failure, or one unlucky moment become my final definition.`,
   },
   {
     id: "motion",
@@ -786,12 +959,16 @@ const valueTopics: ValueTopic[] = [
   {
     id: "giveback",
     title: "Always give back to your community",
-    para: `I wouldn't be where I am without people who shared advice, opened doors, reviewed my work, or simply believed I could do more. That makes me feel responsible to do the same for others. Whether it's helping someone prepare for an interview, sharing what I've learned as a first-generation student, or supporting people from underrepresented backgrounds, I think success feels more meaningful when it circulates.`,
+    para: `I wouldn't be where I am without people who shared advice, opened doors, reviewed my work, or simply believed I could do more. That makes me feel responsible to do the same for others. I actively contribute to the Vietnamese student community by coaching and advising students who are starting their journey in Europe, especially when they are navigating studies, careers, interviews, or life in a new country.
+
+Giving back has also been a big part of my experience with the UNITECH international community. After two meaningful years in the program, I continued for two more years as PMO and Paris Local Chapter lead, organizing events, connecting people, and helping grow the network. For me, success feels more meaningful when it circulates, when what I've learned can make someone else's path a little less lonely, confusing, or intimidating.`,
   },
   {
     id: "uncomfortable",
     title: "I grow when I feel uncomfortable",
-    para: `Most important growth moments in my life started with discomfort: arriving in France without speaking the language fluently, stepping into product from a technical background, pitching a startup, working with senior stakeholders, or building something from zero. I've learned to see discomfort as a signal that I'm entering a new level. Not every uncomfortable situation is good, but many of them have taught me who I can become when I don't run away too early.`,
+    para: `My first flight abroad was the flight that brought me to France at 17. I was leaving home, entering a country where I did not yet speak the language fluently, and carrying not only my own hopes, but also the dreams of my parents. They come from a modest working-class background in Vietnam, and they taught me early the value of hard work, education, and perseverance.
+
+I was scared, of course. But I was never demotivated. That discomfort became the beginning of a much bigger journey: learning a new language, adapting to a new culture, earning my place in higher education, and becoming the first person in my family to pursue university studies. Since then, I've learned to see discomfort as a signal that I'm entering a new level. Not every uncomfortable situation is good, but many of them have shown me who I can become when I don't run away too early.`,
   },
 ];
 
@@ -832,7 +1009,9 @@ function ValueChat({ value }: { value: ValueTopic }) {
             <NiSpark />
             <div className="claude-msg-body">
               <p className="claude-os-heading">{value.title}</p>
-              <p>{value.para}</p>
+              {value.para.split("\n\n").map((para, paraIndex) => (
+                <p key={paraIndex}>{para}</p>
+              ))}
             </div>
           </div>
         ) : (
@@ -1052,6 +1231,7 @@ export default function DockWindowManager() {
 
       if (folderItem && folderId) {
         const title = folderItem.dataset.folderTitle || "Project";
+        const shortTitle = folderItem.dataset.folderShorttitle || title;
         const iconSrc = folderItem.dataset.folderIcon;
         const role = folderItem.dataset.folderRole || "Portfolio project";
         const zIndex = nextZIndex + 1;
@@ -1066,7 +1246,7 @@ export default function DockWindowManager() {
 
           return [
             ...currentWindows,
-            { id: folderId, kind: "folder", title, iconSrc, role, zIndex },
+            { id: folderId, kind: "folder", title, shortTitle, iconSrc, role, zIndex },
           ];
         });
         return;
@@ -1152,7 +1332,7 @@ export default function DockWindowManager() {
                   onClose={() => closeWindow(window.id)}
                 />
                 <p className="folder-info-title">
-                  Information about: {window.title}
+                  {window.shortTitle ?? window.title}
                 </p>
               </header>
               <div className="folder-info-content">
@@ -1175,15 +1355,19 @@ export default function DockWindowManager() {
                   </div>
                 </div>
                 <div className="folder-info-description">
-                  This project window is structured like a macOS information
-                  panel. The final case study copy will replace these placeholders.
+                  {folderIntros[window.id] ??
+                    "This project window is structured like a macOS information panel. The final case study copy will replace these placeholders."}
                 </div>
                 <div className="folder-info-section-list">
-                  {folderSections.map(([section, text]) => (
+                  {(projectFolderSections[window.id] ?? folderSections).map(([section, text]) => (
                     <section className="folder-info-section" key={section}>
                       <h3>{section}</h3>
                       <div className="folder-info-empty">
-                        <p>{text}</p>
+                        <ul className="folder-info-list">
+                          {text.split("\n\n").map((para, paraIndex) => (
+                            <li key={paraIndex}>{para}</li>
+                          ))}
+                        </ul>
                       </div>
                     </section>
                   ))}
