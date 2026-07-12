@@ -145,13 +145,13 @@ const noteGroups = [
       {
         title: "Resume in English",
         folder: "Resume",
-        pdfHref: "/resumes/nguyen-resume-english-v2.pdf",
+        pdfHref: "/resumes/nguyen-resume-english-v3.pdf",
         download: "Nguyen_Resume_English.pdf",
       },
       {
         title: "Resume in French",
         folder: "Resume",
-        pdfHref: "/resumes/nguyen-resume-french-v4.pdf",
+        pdfHref: "/resumes/nguyen-resume-french-v5.pdf",
         download: "Nguyen_Resume_French.pdf",
       },
     ] satisfies NoteItem[],
@@ -836,7 +836,7 @@ That experience made me a stronger PM because it forced me to operate with both 
       "What was I working on?",
       `AXA's Global Design System is the shared foundation that helps AXA's international entities build digital products with the same brand language, design rules, and user experience standards.
 
-Concretely, it includes design guidelines, Figma component libraries, and front-end component libraries used across web, mobile apps, landing pages, and other digital touchpoints. Haigo, the agency I worked for, originally initiated this global design system years ago. When I joined, my role was to continue evolving it as a Product Manager Consultant, working with 3 engineers, 1 tech lead, 2 other PMs, and 1 designer.`,
+Concretely, it includes design guidelines, Figma component libraries, and front-end component libraries used across web, mobile apps, landing pages, and other digital touchpoints. Haigo, the agency I worked for, originally initiated this global design system years ago. When I joined, my role was to continue evolving it as a Product Manager Consultant, working with 3 engineers, 1 tech lead, 2 other PMs, and 2 designers.`,
     ],
     [
       "What made it challenging?",
