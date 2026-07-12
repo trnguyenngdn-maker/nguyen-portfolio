@@ -447,7 +447,7 @@ const folderIntros: Record<string, string> = {
   "fepha-founder-2026":
     "Fepha is my attempt to turn an overlooked coffee culture into a modern European consumer brand, where I intentionally applied product management principles to a physical product world.",
   "ghostcatch-founder-2026":
-    "GhostCatch is a subscription manager I built to help people find, track, and act on the recurring payments they often forget about.",
+    "GhostCatch is a subscription manager I built to help people find, track, and act on the recurring payments they often forget about, without connecting their bank account.",
   "scrollar-founder-2026":
     "Scrollar is a gamified screen time manager I built around one simple idea: time is as precious as money, and every scroll is a little piece of your life spent.",
   "docusign-pm-2025":
@@ -527,7 +527,7 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
     0: [
       {
         src: "/project-media/ghostcatch/logo-ghost.png",
-        caption: "Designing the app logo and creating the personalities for the Ghost.",
+        caption: "Exploring the GhostCatch logo and creating different ghost personalities for the product universe.",
       },
     ],
     2: [
@@ -712,9 +712,11 @@ But physical products made those lessons feel sharper. You cannot pretend operat
   "ghostcatch-founder-2026": [
     [
       "What is this beautiful thing you made?",
-      `GhostCatch is a mobile app I independently designed, built, launched, and grew to help people manage their subscriptions without connecting their bank account.
+      `GhostCatch started from a very familiar feeling: "Wait… am I still paying for this?"
 
-The idea is simple: people often lose visibility on what they're still paying for. Free trials turn into monthly charges, annual plans renew silently, and small subscriptions add up over time. GhostCatch helps users create a clean subscription library, scan bills with AI, and get gentle reminders before renewals.`,
+Free trials quietly turn into monthly charges. Annual plans renew before people notice. Small subscriptions hide in emails, invoices, and app store receipts until they become real money. I wanted to build a simple, privacy-conscious way for people to regain visibility over what they pay for, without asking them to connect their bank account on day one.
+
+The app lets users create a clean subscription library, scan bills or confirmation emails with AI, and receive gentle reminders before renewals. The experience is designed to feel light, useful, and non-judgmental: not another finance dashboard full of guilt, but a small ghost-hunting companion for forgotten recurring payments.`,
     ],
     [
       "How did you spot the gap?",
@@ -748,9 +750,11 @@ It also changed how I think about AI-assisted workflows. The value was not that 
   "scrollar-founder-2026": [
     [
       "What is this beautiful thing you made?",
-      `Scrollar is a mobile app I independently built to help people reduce unhealthy phone usage and turn screen time management into something more engaging than a cold settings page.
+      `Scrollar started from a feeling I think many people know too well: opening your phone "just for five minutes," then realizing half an hour disappeared.
 
-The name comes from Scrolling + Dollar. The idea is introduced right in the onboarding: every scrolling moment has a cost. Not always in money, but in attention, energy, focus, sleep, relationships, and real-life experiences. Scrollar helps users set limits, block distracting apps, track the time they save, and stay motivated through a gamified companion called Hammy, a retro pixel-style pig that grows as they reclaim their time.`,
+I wanted to build a screen time manager that felt less like a punishment and more like a small, motivating system for reclaiming attention. Most screen time tools feel cold, hidden in settings, or too easy to ignore. Scrollar turns the experience into something more visual, emotional, and playful.
+
+The name comes from Scrolling + Dollar. The idea is simple: every scroll has a cost. Not always in money, but in focus, energy, sleep, creativity, relationships, and real-life experiences. Scrollar helps users set limits, block distracting apps, track the time they save, and stay motivated through Hammy, a retro pixel-style pig companion that grows as users reclaim their time.`,
     ],
     [
       "What problem were you solving?",
