@@ -1658,6 +1658,30 @@ body.has-view-work-cursor .mac-dock-item::before {
   line-height: 1.25;
 }
 
+.folder-info-role {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+  row-gap: 2px;
+}
+
+.folder-info-link {
+  color: #1e6fe0;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.folder-info-link::before {
+  content: "·";
+  margin-right: 8px;
+  color: rgb(28 28 30 / 40%);
+}
+
+.folder-info-link:hover {
+  text-decoration: underline;
+}
+
 .folder-info-description {
   margin-bottom: 8px;
   padding: 7px 8px;
@@ -1731,6 +1755,53 @@ body.has-view-work-cursor .mac-dock-item::before {
 
 .folder-info-list li::marker {
   color: rgb(38 36 35 / 52%);
+}
+
+.folder-info-figure {
+  margin: 12px 1px 6px;
+}
+
+.folder-info-figure img,
+.folder-info-figure video {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 400px;
+  border: 1px solid rgb(61 54 50 / 14%);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 70%);
+}
+
+.folder-info-figure video {
+  max-height: 540px;
+}
+
+.folder-info-embed {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgb(61 54 50 / 14%);
+  border-radius: 10px;
+}
+
+.folder-info-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.folder-info-figure figcaption {
+  margin-top: 7px;
+  color: rgb(86 81 78 / 92%);
+  font-size: 11px;
+  font-style: italic;
+  line-height: 1.45;
+  text-align: center;
 }
 
 .folder-info-type {
@@ -3477,7 +3548,7 @@ body.has-view-work-cursor .mac-dock-item::before {
     display: grid;
     grid-template-columns: repeat(2, 118px);
     justify-content: start;
-    align-content: center;
+    align-content: start;
     gap: 1.75rem 2.25rem;
     min-height: 100%;
     width: 100%;
@@ -3489,6 +3560,7 @@ body.has-view-work-cursor .mac-dock-item::before {
   .avatar-panel {
     grid-column: 2;
     grid-row: 1;
+    transform: translate(-3.5rem, 0);
   }
 
   .folder-cluster,
@@ -3659,12 +3731,12 @@ body.has-view-work-cursor .mac-dock-item::before {
 
   .comic-profile {
     --comic-avatar-left: 50%;
-    --comic-avatar-top: 44%;
+    --comic-avatar-top: 46%;
     --comic-avatar-size: 280px;
     --comic-caption-gap: 0.9rem;
     width: min(100%, 420px);
-    height: 820px;
-    min-height: 820px;
+    height: 660px;
+    min-height: 660px;
     margin-top: 0;
   }
 

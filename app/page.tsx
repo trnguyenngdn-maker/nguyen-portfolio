@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import ComicProfile from "./ComicProfile";
 import DockWindowManager from "./DockWindowManager";
+import MenuBarClock from "./MenuBarClock";
 
 type DesktopFolder = {
   id: string;
@@ -61,18 +62,18 @@ const folders: DesktopFolder[] = [
     iconSrc: "/project-icons/docusign.png",
   },
   {
-    id: "loreal-ux-2024",
-    title: "UX Researcher, L'Oreal",
-    subtitle: "CMI · 2024",
-    year: "2024",
-    iconSrc: "/project-icons/loreal.png",
-  },
-  {
     id: "axa-pm-2024",
     title: "Product Manager, AXA",
     subtitle: "Design System · 2024",
     year: "2024",
     iconSrc: "/project-icons/axa.webp",
+  },
+  {
+    id: "loreal-ux-2024",
+    title: "UX Researcher, L'Oreal",
+    subtitle: "CMI · 2024",
+    year: "2024",
+    iconSrc: "/project-icons/loreal.png",
   },
   {
     id: "darkfindr-pm-2023",
@@ -101,14 +102,12 @@ const dockApps: DockApp[] = [
     iconSrc: "/dock-icons/claude.png",
     windowApp: "assistant",
     avatarEmotion: "claude",
-    active: true,
   },
   {
     label: "Recommendations",
     iconSrc: "/dock-icons/safari.png",
     windowApp: "education",
     avatarEmotion: "safari",
-    active: true,
   },
   {
     label: "My interests",
@@ -121,7 +120,6 @@ const dockApps: DockApp[] = [
     iconSrc: "/dock-icons/mail.png",
     windowApp: "contact",
     avatarEmotion: "mail",
-    active: true,
   },
 ];
 
@@ -224,25 +222,30 @@ function DockIcon({
 export default function Home() {
   return (
     <main className="mac-screen relative min-h-screen overflow-x-hidden text-white">
-      <section className="relative z-10 flex min-h-screen flex-col">
+      <section className="relative z-10 flex min-h-screen flex-col pt-6">
         <DockWindowManager />
-        <div className="mac-menu-bar flex h-6 items-center justify-between px-4 text-[13px] font-medium text-black/78">
+        <div className="mac-menu-bar fixed inset-x-0 top-0 z-50 flex h-6 items-center justify-between px-4 text-[13px] font-medium text-black/78">
           <div className="flex items-center gap-5">
             <span className="font-bold">Nguyen&apos;s portfolio</span>
           </div>
           <div className="hidden items-center gap-3 md:flex">
-            <span>Tue Jun 23</span>
-            <span>09:53</span>
+            <MenuBarClock />
           </div>
         </div>
 
         <div className="desktop-stage relative flex-1 px-4 pb-32 pt-8 md:px-10 md:pb-32 lg:px-16">
-          <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 md:grid md:h-[calc(100vh-10rem)] md:min-h-[34rem] md:grid-cols-[minmax(30rem,45rem)_minmax(22rem,1fr)] md:items-center md:gap-12 xl:grid-cols-[minmax(28rem,36rem)_minmax(36rem,1fr)]">
-            <div className="avatar-panel order-1 flex items-start justify-center pt-2 md:order-2 md:pt-0 md:justify-self-stretch">
+          <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 md:grid md:h-[calc(100vh-10rem)] md:min-h-[34rem] md:grid-cols-[minmax(30rem,45rem)_minmax(22rem,1fr)] md:items-start md:gap-12 xl:grid-cols-[minmax(28rem,36rem)_minmax(36rem,1fr)]">
+            <div className="avatar-panel order-1 flex flex-col items-center pt-2 md:order-2 md:pt-0 md:justify-self-stretch">
+              <h2 className="mb-1 text-center text-[17px] font-semibold text-white [text-shadow:0_1px_4px_rgb(0_0_0/55%)]">
+                Myself in a few keywords
+              </h2>
               <ComicProfile />
             </div>
 
             <div className="folder-column order-2 grid grid-cols-2 justify-items-center gap-x-8 gap-y-7 md:order-1 md:block md:h-full md:w-full">
+              <h2 className="col-span-2 mb-1 text-center text-[17px] font-semibold text-white [text-shadow:0_1px_4px_rgb(0_0_0/55%)] md:text-left">
+                Work I&apos;m proud of
+              </h2>
               {folderClusters.map((cluster, clusterIndex) => (
                 <div
                   className={`folder-cluster folder-cluster-${clusterIndex + 1}`}
@@ -272,27 +275,6 @@ export default function Home() {
             {dockApps.map((app, index) => (
               <DockIcon key={app.label} {...app} introDelay={760 + index * 70} />
             ))}
-            <span className="dock-separator mx-1 h-[58px] w-px bg-white/18" />
-            <button
-              type="button"
-              aria-label="Killed by Nguyen"
-              title="Killed by Nguyen"
-              className="mac-dock-item group relative flex shrink-0 flex-col items-center"
-              data-window-app="killed"
-              data-window-title="Killed by Nguyen"
-              data-avatar-emotion="trash"
-              style={{ "--pop-delay": `${760 + dockApps.length * 70}ms` } as CSSProperties}
-            >
-              <Image
-                src="/dock-icons/trash.png"
-                alt=""
-                width={128}
-                height={128}
-                className="trash-icon"
-                aria-hidden="true"
-                priority
-              />
-            </button>
           </div>
         </div>
       </section>

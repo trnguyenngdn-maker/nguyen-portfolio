@@ -449,9 +449,230 @@ const folderIntros: Record<string, string> = {
   "ghostcatch-founder-2026":
     "GhostCatch is a subscription manager I built to help people find, track, and act on the recurring payments they often forget about.",
   "scrollar-founder-2026":
-    "Scrollar is a screen time manager I built to help people keep promises to themselves with stronger controls, smarter onboarding, and a more engaging experience.",
+    "Scrollar is a gamified screen time manager I built around one simple idea: time is as precious as money, and every scroll is a little piece of your life spent.",
   "docusign-pm-2025":
     "I managed identity verification products at Docusign, where every product decision had to balance trust, security, user experience, regulation, and scale.",
+  "axa-pm-2024":
+    "I helped scale AXA's Global Design System by making it more useful, easier to adopt, and more connected to the real needs of local product teams.",
+  "loreal-ux-2024":
+    "I helped L'Oréal understand how consumers experience data privacy and brand content across digital touchpoints, and turned those insights into clearer recommendations for the business.",
+  "darkfindr-pm-2023":
+    "DarkFindR is my first product experience that taught me adding features is not the same as building a product.",
+};
+
+// External links shown next to the role in a project window, keyed by folder id.
+type FolderLink = { label: string; href: string };
+const folderLinks: Record<string, FolderLink[]> = {
+  "fepha-founder-2026": [{ label: "Visit website", href: "https://fephacoffee.com/" }],
+  "docusign-pm-2025": [
+    { label: "Docusign Identity Verification", href: "https://www.docusign.com/products/identify" },
+  ],
+  "ghostcatch-founder-2026": [
+    { label: "App Store", href: "https://apps.apple.com/fr/app/ghostcatch-sub-tracker/id6761310942" },
+    { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.ghostcatch.app&hl=en_GB" },
+  ],
+  "scrollar-founder-2026": [
+    { label: "App Store", href: "https://apps.apple.com/us/app/scrollar-screen-time-control/id6761416368" },
+    { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.scrollar.scrollar&hl=en" },
+  ],
+  "axa-pm-2024": [
+    { label: "Design System", href: "https://designsystem.axa.com/" },
+    { label: "Case study", href: "https://en.haigo.io/case-study/axa-design-system" },
+  ],
+  "darkfindr-pm-2023": [{ label: "Visit website", href: "https://darkfindr.io/" }],
+};
+
+// Photos/GIFs with captions shown inside a project window, keyed by folder id
+// then by the section index they belong under.
+type MediaItem = { src: string; caption: string; poster?: string; youtubeId?: string };
+const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
+  "fepha-founder-2026": {
+    0: [
+      {
+        src: "/project-media/fepha/brand-ideation.png",
+        caption:
+          "Putting our first ideas together for our ideal brand: what it shows, how it feels, and how it connects with its audience.",
+      },
+      {
+        src: "/project-media/fepha/brand-universe.png",
+        caption: "Designing our brand's universe.",
+      },
+    ],
+    2: [
+      {
+        src: "/project-media/fepha/paper-mockup.jpg",
+        caption: "Our very first mock-up of the product on paper.",
+      },
+      {
+        src: "/project-media/fepha/packaging-prototype.png",
+        caption: "Prototyping our coffee packaging.",
+      },
+    ],
+    3: [
+      {
+        src: "/project-media/fepha/shopify-store.png",
+        caption: "Designing and coding our Shopify store.",
+      },
+      {
+        src: "/project-media/fepha/first-sample.jpg",
+        caption: "Receiving our first coffee sample.",
+      },
+      {
+        src: "/project-media/fepha/roasting-profile.jpg",
+        caption: "Working with our roaster to develop our coffee roasting profile.",
+      },
+    ],
+  },
+  "ghostcatch-founder-2026": {
+    0: [
+      {
+        src: "/project-media/ghostcatch/logo-ghost.png",
+        caption: "Designing the app logo and creating the personalities for the Ghost.",
+      },
+    ],
+    2: [
+      {
+        src: "/project-media/ghostcatch/magic-scan.mp4",
+        poster: "/project-media/ghostcatch/magic-scan-poster.jpg",
+        caption:
+          "One of the product's core features, the magic scan: the user selects multiple photos of subscription invoices or screenshots, and the app detects all their subscriptions in the blink of an eye, powered by OpenAI's latest API.",
+      },
+    ],
+    3: [
+      {
+        src: "/project-media/ghostcatch/paper-wireframes.jpg",
+        caption: "My first wireframes on paper.",
+      },
+      {
+        src: "/project-media/ghostcatch/hifi-mockups.png",
+        caption: "Turning the wireframes into high-fidelity mockups.",
+      },
+      {
+        src: "/project-media/ghostcatch/product-page.png",
+        caption: "Designing the product page on App Store and Play Store.",
+      },
+    ],
+  },
+  "scrollar-founder-2026": {
+    0: [
+      {
+        src: "/project-media/scrollar/coin-concept.png",
+        caption:
+          "The emotional engagement of the app lies in the fact that time is as precious as money: every moment spent doomscrolling is a coin lost, represented in the app.",
+      },
+    ],
+    1: [
+      {
+        src: "/project-media/scrollar/doomscroll-social.jpg",
+        caption:
+          "People openly share about doomscrolling on social media and constantly look for ways to stop it.",
+      },
+    ],
+    2: [
+      {
+        src: "/project-media/scrollar/blocking-rules.mp4",
+        poster: "/project-media/scrollar/blocking-rules-poster.jpg",
+        caption:
+          "The app lets users block addictive apps with different blocking rules: during specific hours or for a set time limit.",
+      },
+      {
+        src: "/project-media/scrollar/hammy.mp4",
+        poster: "/project-media/scrollar/hammy-poster.jpg",
+        caption: "Hammy is the screen time companion that evolves as the user saves screen time.",
+      },
+    ],
+    3: [
+      {
+        src: "/project-media/scrollar/first-mockup.png",
+        caption: "The very first mockup version of the app.",
+      },
+      {
+        src: "/project-media/scrollar/product-page.png",
+        caption: "Designing the product page on App Store and Play Store.",
+      },
+    ],
+  },
+  "docusign-pm-2025": {
+    0: [
+      {
+        src: "/project-media/docusign/first-day.jpg",
+        caption: "My first day at Docusign.",
+      },
+      {
+        src: "/project-media/docusign/idv-solutions.png",
+        caption:
+          "A list of Docusign's identity verification solutions, among which Phone Authentication is the most used, with 10M monthly transactions.",
+      },
+    ],
+    2: [
+      {
+        src: "/project-media/docusign/phone-auth.png",
+        caption:
+          "Phone Authentication experience: the user is asked to enter an OTP code sent to their phone.",
+      },
+    ],
+    4: [
+      {
+        src: "/project-media/docusign/eid-schemes.png",
+        caption:
+          "eID is a high-trust verification method, letting users verify their identity with specific bank or government-based credentials (especially popular in the Nordic countries).",
+      },
+    ],
+  },
+  "axa-pm-2024": {
+    0: [
+      {
+        src: "/project-media/axa/design-system-home.png",
+        caption:
+          "AXA's design system, often listed among the top design systems in industry roundups (for example, designsystemhunt.com).",
+      },
+      {
+        src: "https://www.youtube.com/watch?v=Zx9M3wdQ_ZE",
+        youtubeId: "Zx9M3wdQ_ZE",
+        caption: "Introduction to AXA's Design System.",
+      },
+    ],
+    3: [
+      {
+        src: "/project-media/axa/design-workshop.jpg",
+        caption:
+          "A design thinking workshop to align the whole team around how to build and deploy the Design Tokens, making it easier for local entities to adopt the design system.",
+      },
+    ],
+  },
+  "loreal-ux-2024": {
+    0: [
+      {
+        src: "/project-media/loreal/brands-grid-v2.png",
+        caption:
+          "L'Oréal is a maison of 37 brands, each with its own DNA, but together they all contribute to the image of L'Oréal.",
+      },
+    ],
+    4: [
+      {
+        src: "/project-media/loreal/on-the-job.jpg",
+        caption: "Just a random photo from a day working on the L'Oréal site.",
+      },
+    ],
+  },
+  "darkfindr-pm-2023": {
+    3: [
+      {
+        src: "/project-media/darkfindr/cyberbooster-pitch.jpg",
+        caption:
+          "Preparing for our pitch and product demo at CyberBooster, the incubator we integrated DarkFindR into.",
+      },
+      {
+        src: "/project-media/darkfindr/cyberbooster-promotion.png",
+        caption: "Our CyberBooster promotion of 2023: only 5 startups were selected.",
+      },
+      {
+        src: "/project-media/darkfindr/wavestone-report.png",
+        caption:
+          "DarkFindR was identified as one of the emerging startups in the French cybersecurity ecosystem in 2024, in one of Wavestone's reports.",
+      },
+    ],
+  },
 };
 
 // Per-project section titles and content, keyed by folder id.
@@ -529,7 +750,7 @@ It also changed how I think about AI-assisted workflows. The value was not that 
       "What is this beautiful thing you made?",
       `Scrollar is a mobile app I independently built to help people reduce unhealthy phone usage and turn screen time management into something more engaging than a cold settings page.
 
-The product uses screen time control APIs to help users set limits, block distracting apps, and track the time they save. But the emotional layer is just as important: users are guided by Hammy, a retro pixel-style pig mascot that grows as they save screen time and unlocks playful skins inspired by childhood characters and internet culture.`,
+The name comes from Scrolling + Dollar. The idea is introduced right in the onboarding: every scrolling moment has a cost. Not always in money, but in attention, energy, focus, sleep, relationships, and real-life experiences. Scrollar helps users set limits, block distracting apps, track the time they save, and stay motivated through a gamified companion called Hammy, a retro pixel-style pig that grows as they reclaim their time.`,
     ],
     [
       "What problem were you solving?",
@@ -541,19 +762,19 @@ Apple already has Screen Time, but the conversations around it revealed two majo
       "What did you build differently?",
       `I designed Scrollar around three ideas: granular control, stronger blocking, and emotional engagement.
 
-Users can define more specific screen time rules instead of relying on one generic blocking mode. The app is designed to make bypassing limits harder, so the user's future self is better protected from their impulsive self. And instead of making the experience feel punitive, Scrollar gives users a small companion: Hammy grows as they reclaim time, turning progress into something visible and a little bit fun.
+Users can define more specific screen time rules instead of relying on one generic blocking mode. The app is designed to make bypassing limits harder, so the user's future self is better protected from their impulsive self. And instead of making the experience feel punitive, Scrollar turns progress into something visible: Hammy grows as users save time and unlocks playful skins inspired by childhood characters and internet culture.
 
-The idea was inspired by products like Duolingo. The innovation is not always inventing a completely new category. Sometimes, it is taking a proven engagement mechanic from one domain and applying it to a behavior that badly needs a better experience.`,
+The inspiration came partly from products like Duolingo. Innovation is not always about inventing a completely new category. Sometimes, it is about taking a proven engagement mechanic from one domain and applying it to a behavior that badly needs a better experience.`,
     ],
     [
       "How did it come together?",
-      `The hardest part was not only building the app. It was earning the right to build it properly. Screen time data is sensitive, and access to these APIs requires going through strict platform approval and privacy requirements. That forced me to think carefully about trust, user consent, data minimization, and how to explain the product clearly.
+      `The hardest part was not only building the app. It was earning the right to build it properly. Screen time data is sensitive, and access to these APIs requires strict platform approval and privacy requirements. That forced me to think carefully about trust, user consent, data minimization, and how to explain the product clearly.
 
-Once the foundation was unlocked, I used AI-assisted workflows with tools like Claude Code, Google Stitch, and Figma Make to move quickly from idea to prototype to launch. I designed the onboarding very intentionally: not just asking users what they want to block, but helping them reflect on how screen time affects their life and showing them early what they could gain by changing the habit.`,
+Once the foundation was unlocked, I used AI-assisted workflows with tools like Claude Code, Google Stitch, and Figma Make to move quickly from idea to prototype to launch. I designed the onboarding very intentionally: not just asking users what they want to block, but helping them realize what their screen time is costing them, and showing what they could gain by changing the habit.`,
     ],
     [
       "What did it give back?",
-      `Within six weeks of launch, Scrollar grew to 1,500 users. More importantly, it taught me how much product management in consumer space is about behavior, not just features.
+      `Within six weeks of launch, Scrollar grew to 1,500 users. More importantly, it taught me how much product management in consumer products is about behavior, not just features.
 
 A screen time app is not successful because it has a timer. It is successful if it helps someone make a better decision in a weak moment. Scrollar became a strong exercise in user-centric product thinking: understand the emotional pain, study why existing solutions fail, design around motivation and friction, navigate privacy constraints, ship fast, and learn from real users.`,
     ],
@@ -604,6 +825,116 @@ I worked on the integration of new eID suppliers into the Docusign platform, hel
 I learned how to make product decisions in a space where user experience, security, compliance, technical debt, vendor strategy, and customer trust all collide. It sharpened the way I think about trade-offs: not just "what should we build?" but "what can we change safely, who will be affected, what could break, and how do we bring everyone with us?"
 
 That experience made me a stronger PM because it forced me to operate with both ambition and care. Move the product forward, yes, but never forget the trust sitting underneath it.`,
+    ],
+  ],
+  "axa-pm-2024": [
+    [
+      "What was I working on?",
+      `AXA's Global Design System is the shared foundation that helps AXA's international entities build digital products with the same brand language, design rules, and user experience standards.
+
+Concretely, it includes design guidelines, Figma component libraries, and front-end component libraries used across web, mobile apps, landing pages, and other digital touchpoints. Haigo, the agency I worked for, originally initiated this global design system years ago. When I joined, my role was to continue evolving it as a Product Manager Consultant, working with 3 engineers, 1 tech lead, 2 other PMs, and 1 designer.`,
+    ],
+    [
+      "What made it challenging?",
+      `The hard part of a design system is not only building good components. It is getting people to actually use them.
+
+AXA is a large and decentralized organization. Each local entity has different products, constraints, habits, maturity levels, and priorities. Some teams need components for mobile apps, others for web platforms or marketing pages. A "perfect" solution for everyone rarely exists.
+
+So the real product challenge was adoption: how do we make the design system practical enough that local teams want to use it, flexible enough to fit different contexts, and consistent enough to protect the AXA brand globally?`,
+    ],
+    [
+      "How did I approach it?",
+      `I treated the local entities as users of the product. I spoke with them, collected feedback, understood their use cases, and helped prioritize the components and improvements that would create the most reusable value across the organization.
+
+This meant constantly balancing trade-offs: global consistency versus local flexibility, design quality versus engineering capacity, long-term scalability versus short-term needs. As an external PM, I also had to be very intentional in how I communicated, not by imposing decisions from the outside, but by creating alignment and making the system feel useful for the teams who had to adopt it.`,
+    ],
+    [
+      "What did we improve?",
+      `One major initiative was the integration of Design Tokens. Instead of asking teams to manually choose the right color, spacing, or style every time, tokens gave them a more structured way to apply AXA's design rules based on context.
+
+For example, a team building a landing page should not have to guess which shade of blue to use. The system should guide them toward the right design decision by default. That is the power of a good design system: it reduces friction, avoids inconsistencies, and helps teams move faster while staying on-brand.
+
+These efforts contributed to a 32% increase in monthly active usage of AXA's Global Design System after one year.`,
+    ],
+    [
+      "What else did I build?",
+      `I also helped design, build, and deploy a design maturity assessment interface for 30+ AXA entities.
+
+The goal was to help each entity assess its own digital and design maturity: what tools they were using, where they needed support, what capabilities were missing, and what opportunities could help them improve. The output was not just a score. It helped identify concrete opportunities: new tooling, training, leadership support, better resources, or stronger design practices.
+
+This was especially interesting because it turned a vague transformation topic, "how mature are we digitally?", into something structured, visible, and actionable.`,
+    ],
+    [
+      "What did it teach me?",
+      `AXA taught me that a product does not always look like an app. Sometimes, the product is a system, a library, a workflow, or a shared language that helps many teams build better things.
+
+It also taught me that adoption is a product problem. A design system can be beautifully made, but if teams don't understand it, trust it, or see how it helps their daily work, it fails. My role was to help bridge that gap: listen to teams, understand their constraints, prioritize what mattered most, and make the system easier to use at scale.
+
+This experience made me a sharper PM because it forced me to think beyond one user journey. I had to think about many teams, many contexts, and one shared system that needed to work for all of them.`,
+    ],
+  ],
+  "loreal-ux-2024": [
+    [
+      "What was I working on?",
+      `I worked with Haigo for L'Oréal CMI (Customer & Market Insights) on a research project exploring how consumers interact with L'Oréal's digital experiences across multiple brands.
+
+My focus was on two areas, data privacy and content experience, for two major brands of the house. The challenge was that each brand had its own way of collecting data, communicating with users, and creating content, but from the customer's point of view, all of these interactions still shaped the image of L'Oréal as a whole.`,
+    ],
+    [
+      "How did I approach it?",
+      `I led the research workstream for these topics from end to end: designing interview guides, recruiting consumers, running interviews, synthesizing insights, and turning them into recommendations.
+
+The goal was not just to collect opinions. It was to understand how people build trust, what makes them uncomfortable, what kind of content they actually want from each platform, and how L'Oréal could create a more consistent experience without making every brand feel the same.`,
+    ],
+    [
+      "What did we learn?",
+      `On data privacy, the key learning was that users are not simply "for" or "against" sharing data. Their reaction depends heavily on context. They are more open to sharing information when the value exchange feels clear, useful, and proportionate: for example, better recommendations, more relevant content, or a smoother shopping experience. But when the request feels vague, hidden, or disconnected from an obvious benefit, trust drops quickly.
+
+On content, we saw that consumers do not expect the same thing from every platform. On TikTok, they are more open to entertainment, creator-led formats, trends, and content that feels spontaneous or educational without being too polished. On Instagram, aesthetics matter much more: people expect visual consistency, aspiration, brand universe, and beautiful product storytelling. For a house like L'Oréal, this means content strategy cannot be copy-pasted across channels. The same brand needs to adapt its tone, format, and level of polish depending on where the customer meets it.`,
+    ],
+    [
+      "What did it become?",
+      `Together with other UX researchers, we designed a multi-brand customer journey framework mapping 16 touchpoints across digital, retail, and customer-facing channels.
+
+The framework helped L'Oréal teams visualize the highs and lows of the customer experience: where consumers felt inspired, where trust could be strengthened, where content helped decision-making, and where the experience risked becoming confusing or overwhelming.`,
+    ],
+    [
+      "What did it teach me?",
+      `This project taught me how to run research in a structured, useful, and business-oriented way. Good research is not just about asking questions; it is about turning messy human signals into decisions that teams can actually act on.
+
+It also reinforced something I strongly believe as a PM: trust, clarity, relevance, and channel fit are not "soft" topics. They directly shape engagement, conversion, loyalty, and brand perception.`,
+    ],
+  ],
+  "darkfindr-pm-2023": [
+    [
+      "What was I walking into?",
+      `I joined Wannath right after school as an IT Engineer Consultant, working on cybersecurity projects. Very quickly, I became curious about the product side: not just how security tools work, but who they are for, what pain they solve, and why a company would actually buy them.
+
+That curiosity led me to DarkFindR, an internal incubator project around dark web monitoring. At the time, the product was still blurry. Previous teams had added features, but the product lacked a clear buyer, use case, positioning, and commercial story. Wannath had struggled to sell it, so my role became to help reset the direction.`,
+    ],
+    [
+      "How did I approach it?",
+      `I started by going back to the basics: who is the buyer, who is the user, what problem are we solving, and what gap exists in the market?
+
+Because this was a B2B cybersecurity product, I spent the first month speaking with potential buyers and users to understand how companies deal with leaked data on the dark web, what existing solutions failed to cover, and what kind of alerts or intelligence would actually be useful enough to pay for.`,
+    ],
+    [
+      "What did we build?",
+      `Working with two engineers, I helped redefine the MVP around a smaller, clearer set of features instead of continuing to stack functionality without purpose.
+
+The goal was not to build the most complete dark web monitoring platform. It was to build the first version that could prove the product's value: identify leaked company data, make the risk understandable, and help teams act on it before it became a bigger security issue.`,
+    ],
+    [
+      "What did it unlock?",
+      `Once the product story became clearer, we decided the next step was to apply to CyberBooster, a French cybersecurity incubator. Cybersecurity was becoming a strategic topic in France, and we believed DarkFindR could fit that momentum.
+
+The project was accepted, and we secured €150K in funding. Beyond the money, CyberBooster gave us access to something just as valuable: a network of potential buyers, strategic advice, leads, training, and credibility in the cybersecurity ecosystem.`,
+    ],
+    [
+      "What did it teach me?",
+      `DarkFindR was my first real lesson in product management: a product is not a pile of features. A product needs a clear user, a clear buyer, a clear pain, and a reason to exist in the market.
+
+It also taught me how powerful product positioning can be. The same technology can feel confusing or compelling depending on how clearly you frame the problem, the customer, and the business value. For a first PM experience, it was intense, but it gave me the foundation for how I still think today: start with the problem, talk to the market, define the smallest valuable product, and build around a story people can believe in.`,
     ],
   ],
 };
@@ -1351,7 +1682,20 @@ export default function DockWindowManager() {
                   )}
                   <div>
                     <h2>{window.title}</h2>
-                    <p>{window.role ?? "Portfolio project"}</p>
+                    <p className="folder-info-role">
+                      <span>{window.role ?? "Portfolio project"}</span>
+                      {folderLinks[window.id]?.map((link) => (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="folder-info-link"
+                        >
+                          {link.label}
+                        </a>
+                      ))}
+                    </p>
                   </div>
                 </div>
                 <div className="folder-info-description">
@@ -1359,7 +1703,7 @@ export default function DockWindowManager() {
                     "This project window is structured like a macOS information panel. The final case study copy will replace these placeholders."}
                 </div>
                 <div className="folder-info-section-list">
-                  {(projectFolderSections[window.id] ?? folderSections).map(([section, text]) => (
+                  {(projectFolderSections[window.id] ?? folderSections).map(([section, text], sectionIndex) => (
                     <section className="folder-info-section" key={section}>
                       <h3>{section}</h3>
                       <div className="folder-info-empty">
@@ -1369,18 +1713,35 @@ export default function DockWindowManager() {
                           ))}
                         </ul>
                       </div>
+                      {folderSectionMedia[window.id]?.[sectionIndex]?.map((media) => (
+                        <figure className="folder-info-figure" key={media.src}>
+                          {media.youtubeId ? (
+                            <div className="folder-info-embed">
+                              <iframe
+                                src={`https://www.youtube-nocookie.com/embed/${media.youtubeId}`}
+                                title={media.caption}
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              />
+                            </div>
+                          ) : /\.(mp4|webm|mov)$/i.test(media.src) ? (
+                            <video
+                              src={media.src}
+                              poster={media.poster}
+                              controls
+                              playsInline
+                              preload="metadata"
+                            />
+                          ) : (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={media.src} alt={media.caption} loading="lazy" />
+                          )}
+                          <figcaption>{media.caption}</figcaption>
+                        </figure>
+                      ))}
                     </section>
                   ))}
-                  <section className="folder-info-section">
-                    <h3>Details</h3>
-                    <p className="folder-info-type">
-                      <strong>Type:</strong> Product / Design / Build
-                    </p>
-                  </section>
-                  <section className="folder-info-section">
-                    <h3>Preview</h3>
-                    <div className="folder-info-preview" aria-hidden="true" />
-                  </section>
                 </div>
               </div>
             </>
