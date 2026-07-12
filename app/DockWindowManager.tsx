@@ -484,7 +484,15 @@ const folderLinks: Record<string, FolderLink[]> = {
 
 // Photos/GIFs with captions shown inside a project window, keyed by folder id
 // then by the section index they belong under.
-type MediaItem = { src: string; caption: string; poster?: string; youtubeId?: string };
+// `after` = index of the paragraph this media should follow (0-based).
+// -1 places it before the first paragraph; omitted places it at the section end.
+type MediaItem = {
+  src: string;
+  caption: string;
+  poster?: string;
+  youtubeId?: string;
+  after?: number;
+};
 const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
   "fepha-founder-2026": {
     0: [
@@ -511,14 +519,17 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
     3: [
       {
         src: "/project-media/fepha/shopify-store.png",
+        after: 0,
         caption: "Designing and coding our Shopify store.",
       },
       {
         src: "/project-media/fepha/first-sample.jpg",
+        after: 0,
         caption: "Receiving our first coffee sample.",
       },
       {
         src: "/project-media/fepha/roasting-profile.jpg",
+        after: 0,
         caption: "Working with our roaster to develop our coffee roasting profile.",
       },
     ],
@@ -534,6 +545,7 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
       {
         src: "/project-media/ghostcatch/magic-scan.mp4",
         poster: "/project-media/ghostcatch/magic-scan-poster.jpg",
+        after: 1,
         caption:
           "One of the product's core features, the magic scan: the user selects multiple photos of subscription invoices or screenshots, and the app detects all their subscriptions in the blink of an eye, powered by OpenAI's latest API.",
       },
@@ -564,6 +576,7 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
     1: [
       {
         src: "/project-media/scrollar/doomscroll-social.jpg",
+        after: 0,
         caption:
           "People openly share about doomscrolling on social media and constantly look for ways to stop it.",
       },
@@ -572,12 +585,14 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
       {
         src: "/project-media/scrollar/blocking-rules.mp4",
         poster: "/project-media/scrollar/blocking-rules-poster.jpg",
+        after: 1,
         caption:
           "The app lets users block addictive apps with different blocking rules: during specific hours or for a set time limit.",
       },
       {
         src: "/project-media/scrollar/hammy.mp4",
         poster: "/project-media/scrollar/hammy-poster.jpg",
+        after: 1,
         caption: "Hammy is the screen time companion that evolves as the user saves screen time.",
       },
     ],
@@ -596,6 +611,7 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
     0: [
       {
         src: "/project-media/docusign/first-day.jpg",
+        after: -1,
         caption: "My first day at Docusign.",
       },
       {
@@ -607,6 +623,7 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
     2: [
       {
         src: "/project-media/docusign/phone-auth.png",
+        after: 0,
         caption:
           "Phone Authentication experience: the user is asked to enter an OTP code sent to their phone.",
       },
@@ -614,6 +631,7 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
     4: [
       {
         src: "/project-media/docusign/eid-schemes.png",
+        after: 0,
         caption:
           "eID is a high-trust verification method, letting users verify their identity with specific bank or government-based credentials (especially popular in the Nordic countries).",
       },
@@ -623,18 +641,21 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
     0: [
       {
         src: "/project-media/axa/design-system-home.png",
+        after: 0,
         caption:
           "AXA's design system, often listed among the top design systems in industry roundups (for example, designsystemhunt.com).",
       },
       {
         src: "https://www.youtube.com/watch?v=Zx9M3wdQ_ZE",
         youtubeId: "Zx9M3wdQ_ZE",
+        after: 0,
         caption: "Introduction to AXA's Design System.",
       },
     ],
     3: [
       {
         src: "/project-media/axa/design-workshop.jpg",
+        after: 0,
         caption:
           "A design thinking workshop to align the whole team around how to build and deploy the Design Tokens, making it easier for local entities to adopt the design system.",
       },
@@ -659,6 +680,7 @@ const folderSectionMedia: Record<string, Record<number, MediaItem[]>> = {
     3: [
       {
         src: "/project-media/darkfindr/cyberbooster-pitch.jpg",
+        after: 0,
         caption:
           "Preparing for our pitch and product demo at CyberBooster, the incubator we integrated DarkFindR into.",
       },
@@ -1707,45 +1729,57 @@ export default function DockWindowManager() {
                     "This project window is structured like a macOS information panel. The final case study copy will replace these placeholders."}
                 </div>
                 <div className="folder-info-section-list">
-                  {(projectFolderSections[window.id] ?? folderSections).map(([section, text], sectionIndex) => (
-                    <section className="folder-info-section" key={section}>
-                      <h3>{section}</h3>
-                      <div className="folder-info-empty">
-                        <ul className="folder-info-list">
-                          {text.split("\n\n").map((para, paraIndex) => (
-                            <li key={paraIndex}>{para}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      {folderSectionMedia[window.id]?.[sectionIndex]?.map((media) => (
-                        <figure className="folder-info-figure" key={media.src}>
-                          {media.youtubeId ? (
-                            <div className="folder-info-embed">
-                              <iframe
-                                src={`https://www.youtube-nocookie.com/embed/${media.youtubeId}`}
-                                title={media.caption}
-                                loading="lazy"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                              />
-                            </div>
-                          ) : /\.(mp4|webm|mov)$/i.test(media.src) ? (
-                            <video
-                              src={media.src}
-                              poster={media.poster}
-                              controls
-                              playsInline
-                              preload="metadata"
+                  {(projectFolderSections[window.id] ?? folderSections).map(([section, text], sectionIndex) => {
+                    const paragraphs = text.split("\n\n");
+                    const lastIndex = paragraphs.length - 1;
+                    const media = folderSectionMedia[window.id]?.[sectionIndex] ?? [];
+                    const mediaAfter = (index: number) =>
+                      media.filter(
+                        (item) => Math.min(item.after ?? lastIndex, lastIndex) === index,
+                      );
+                    const renderFigure = (item: MediaItem) => (
+                      <figure className="folder-info-figure" key={item.src}>
+                        {item.youtubeId ? (
+                          <div className="folder-info-embed">
+                            <iframe
+                              src={`https://www.youtube-nocookie.com/embed/${item.youtubeId}`}
+                              title={item.caption}
+                              loading="lazy"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
                             />
-                          ) : (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={media.src} alt={media.caption} loading="lazy" />
-                          )}
-                          <figcaption>{media.caption}</figcaption>
-                        </figure>
-                      ))}
-                    </section>
-                  ))}
+                          </div>
+                        ) : /\.(mp4|webm|mov)$/i.test(item.src) ? (
+                          <video
+                            src={item.src}
+                            poster={item.poster}
+                            controls
+                            playsInline
+                            preload="metadata"
+                          />
+                        ) : (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.src} alt={item.caption} loading="lazy" />
+                        )}
+                        <figcaption>{item.caption}</figcaption>
+                      </figure>
+                    );
+
+                    return (
+                      <section className="folder-info-section" key={section}>
+                        <h3>{section}</h3>
+                        <div className="folder-info-empty">
+                          {media.filter((item) => (item.after ?? lastIndex) < 0).map(renderFigure)}
+                          {paragraphs.flatMap((para, paraIndex) => [
+                            <p className="folder-info-para" key={`p-${paraIndex}`}>
+                              {para}
+                            </p>,
+                            ...mediaAfter(paraIndex).map(renderFigure),
+                          ])}
+                        </div>
+                      </section>
+                    );
+                  })}
                 </div>
               </div>
             </>
